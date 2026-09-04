@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useState, useRef } from 'react'
+import type { Transition, Variants } from 'framer-motion'
 import {
   AnimatePresence,
   MotionConfig,
@@ -39,32 +40,47 @@ const faqs: [string, string][] = [
   ['Is this suitable for children?', 'Absolutely. We tailor the pace, vehicle and timing for families, with patient naturalist-guided drives and plenty of space to pause.'],
 ]
 
-/* ─── Shared transition presets (motion.dev spring best-practices) */
-const SPRING_SMOOTH = { type: 'spring', stiffness: 60, damping: 20, mass: 1 }
-const SPRING_SNAPPY = { type: 'spring', stiffness: 280, damping: 28, mass: 0.8 }
-const SPRING_GENTLE = { type: 'spring', stiffness: 40, damping: 18, mass: 1.2 }
-const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const
+/* ─── Typed transition presets ──────────────────────────────────
+   `type` must be the literal 'spring' — not just string.          */
+const SPRING_SMOOTH: Transition = { type: 'spring', stiffness: 60, damping: 20, mass: 1 }
+const SPRING_SNAPPY: Transition = { type: 'spring', stiffness: 280, damping: 28, mass: 0.8 }
+const SPRING_GENTLE: Transition = { type: 'spring', stiffness: 40, damping: 18, mass: 1.2 }
+const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
-/* ─── Section reveal: fades up with blur-clear ─────────────────── */
-function useRevealAnimation() {
-  const ref = useRef<HTMLDivElement>(null)
-  const inView = useInView(ref, { once: true, margin: '-80px 0px' })
-  return { ref, inView }
+/* ─── Variants ──────────────────────────────────────────────────── */
+const staggerContainer: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
+}
+const staggerItem: Variants = {
+  hidden: { opacity: 0, y: 28, filter: 'blur(4px)' },
+  visible: {
+    opacity: 1, y: 0, filter: 'blur(0px)',
+    transition: SPRING_SMOOTH,
+  },
+}
+const heroH1Variants: Variants = {
+  hidden: { opacity: 0, y: 40, filter: 'blur(8px)' },
+  visible: {
+    opacity: 1, y: 0, filter: 'blur(0px)',
+    transition: { ...SPRING_GENTLE, delay: 0.1 },
+  },
 }
 
+/* ─── Section reveal ────────────────────────────────────────────── */
 function SectionReveal({
   children,
   className = '',
   delay = 0,
-  as: Tag = 'section',
 }: {
   children: React.ReactNode
   className?: string
   delay?: number
-  as?: React.ElementType
 }) {
-  const { ref, inView } = useRevealAnimation()
+  const ref = useRef<HTMLDivElement>(null)
+  const inView = useInView(ref, { once: true, margin: '-80px 0px' })
   const reduced = useReducedMotion()
+
   return (
     <motion.div
       ref={ref}
@@ -72,25 +88,10 @@ function SectionReveal({
       initial={reduced ? false : { opacity: 0, y: 36, filter: 'blur(4px)' }}
       animate={inView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
       transition={{ ...SPRING_SMOOTH, delay }}
-      // @ts-ignore
-      as={Tag}
     >
       {children}
     </motion.div>
   )
-}
-
-/* ─── Stagger children wrapper ──────────────────────────────────── */
-const staggerContainer = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
-}
-const staggerItem = {
-  hidden: { opacity: 0, y: 28, filter: 'blur(4px)' },
-  visible: {
-    opacity: 1, y: 0, filter: 'blur(0px)',
-    transition: SPRING_SMOOTH,
-  },
 }
 
 /* ─── WhatsApp CTA Button ───────────────────────────────────────── */
@@ -113,25 +114,26 @@ function WhatsAppButton({ label = 'Plan your safari' }: { label?: string }) {
 
 /* ─── Navbar ────────────────────────────────────────────────────── */
 function Nav({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: (v: boolean) => void }) {
+  const navLabels = ['The experience', 'Park guide', 'Field notes', 'Contact']
+  const navHrefs = ['#experience', '#guide', '#journal', '#contact']
+
   return (
     <nav className="nav">
       <a className="brand" href="#top" aria-label="Wild Udawalawe home">
         <span>W</span>ILD<br />UDAWALAWE
       </a>
-      <AnimatePresence>
-        <div className={`nav-links ${menuOpen ? 'open' : ''}`}>
-          {['#experience', '#guide', '#journal', '#contact'].map((href, i) => (
-            <motion.a
-              key={href}
-              href={href}
-              onClick={() => setMenuOpen(false)}
-              whileHover={{ color: '#d1a05d', transition: { duration: 0.15 } }}
-            >
-              {['The experience', 'Park guide', 'Field notes', 'Contact'][i]}
-            </motion.a>
-          ))}
-        </div>
-      </AnimatePresence>
+      <div className={`nav-links ${menuOpen ? 'open' : ''}`}>
+        {navHrefs.map((href, i) => (
+          <motion.a
+            key={href}
+            href={href}
+            onClick={() => setMenuOpen(false)}
+            whileHover={{ color: '#d1a05d', transition: { duration: 0.15 } }}
+          >
+            {navLabels[i]}
+          </motion.a>
+        ))}
+      </div>
       <WhatsAppButton label="Book a drive" />
       <motion.button
         className="menu-btn"
@@ -162,8 +164,7 @@ export default function Page() {
   const [sent, setSent] = useState(false)
   const reduced = useReducedMotion()
 
-  /* Parallax hero */
-  const heroRef = useRef<HTMLElement>(null)
+  /* Parallax hero — spring-smoothed scroll */
   const { scrollY } = useScroll()
   const rawHeroY = useTransform(scrollY, [0, 600], [0, reduced ? 0 : 90])
   const heroY = useSpring(rawHeroY, { stiffness: 80, damping: 25 })
@@ -182,38 +183,36 @@ export default function Page() {
   return (
     <MotionConfig reducedMotion="user">
       <main>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }} />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+        />
         <Nav menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
         {/* ── HERO ── */}
-        <section className="hero" id="top" ref={heroRef}>
+        <section className="hero" id="top">
           <motion.div className="hero-media" style={{ y: heroY, scale: heroScale }}>
             <Image
               src="/safari-hero.png"
               alt="Elephants gathered beside a lake in Udawalawe National Park"
-              fill priority sizes="100vw"
+              fill
+              priority
+              sizes="100vw"
               className="hero-image"
             />
           </motion.div>
           <div className="hero-shade" />
 
-          {/* Hero copy — blur-in entrance on mount */}
           <motion.div
             className="hero-copy"
             variants={staggerContainer}
             initial="hidden"
             animate="visible"
           >
-            <motion.p variants={staggerItem} className="eyebrow">PRIVATE SAFARI EXPERIENCES · SRI LANKA</motion.p>
-            <motion.h1
-              variants={{
-                hidden: { opacity: 0, y: 40, filter: 'blur(8px)' },
-                visible: {
-                  opacity: 1, y: 0, filter: 'blur(0px)',
-                  transition: { ...SPRING_GENTLE, delay: 0.1 },
-                },
-              }}
-            >
+            <motion.p variants={staggerItem} className="eyebrow">
+              PRIVATE SAFARI EXPERIENCES · SRI LANKA
+            </motion.p>
+            <motion.h1 variants={heroH1Variants}>
               Read the<br /><em>wild</em> closely.
             </motion.h1>
             <motion.p variants={staggerItem} className="hero-text">
@@ -224,7 +223,6 @@ export default function Page() {
             </motion.div>
           </motion.div>
 
-          {/* Hero foot */}
           <motion.div
             className="hero-foot"
             initial={{ opacity: 0, y: 14 }}
@@ -263,7 +261,12 @@ export default function Page() {
         {/* ── SPLIT STORY ── */}
         <SectionReveal className="split-story">
           <div className="story-image">
-            <Image src="/safari-landscape.png" alt="Safari track through Udawalawe grassland" fill sizes="(max-width: 768px) 100vw, 50vw" />
+            <Image
+              src="/safari-landscape.png"
+              alt="Safari track through Udawalawe grassland"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
           </div>
           <div className="story-copy">
             <p className="eyebrow">01 / THE PARK</p>
@@ -280,7 +283,7 @@ export default function Page() {
         </SectionReveal>
 
         {/* ── EXPERIENCE ── */}
-        <SectionReveal className="experience section-pad" as="section">
+        <SectionReveal className="experience section-pad">
           <div id="experience" />
           <div className="section-heading">
             <div>
@@ -296,7 +299,6 @@ export default function Page() {
             whileInView="visible"
             viewport={{ once: true, margin: '-60px' }}
           >
-            {/* Card A */}
             <motion.article
               variants={staggerItem}
               className="experience-card card-dark"
@@ -306,22 +308,29 @@ export default function Page() {
               <Compass size={28} strokeWidth={1} />
               <h3>First light</h3>
               <p>Wake with the park. Cool air, long shadows and the first movement at the waterhole.</p>
-              <motion.a href="#contact" whileHover={{ x: 3, transition: SPRING_SNAPPY }}>Morning drive <ArrowUpRight size={15} /></motion.a>
+              <motion.a href="#contact" whileHover={{ x: 3, transition: SPRING_SNAPPY }}>
+                Morning drive <ArrowUpRight size={15} />
+              </motion.a>
             </motion.article>
-            {/* Card B */}
+
             <motion.article
               variants={staggerItem}
               className="experience-card card-photo"
               whileHover={{ y: -8, transition: SPRING_SNAPPY }}
             >
-              <Image src="/safari-elephants.png" alt="Sri Lankan elephant in lush Udawalawe forest" fill sizes="(max-width: 768px) 100vw, 33vw" />
+              <Image
+                src="/safari-elephants.png"
+                alt="Sri Lankan elephant in lush Udawalawe forest"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
               <div className="photo-overlay">
                 <span className="card-index">B</span>
                 <h3>Golden hour</h3>
                 <p>Follow the warmth of the afternoon into a quiet, amber evening.</p>
               </div>
             </motion.article>
-            {/* Card C */}
+
             <motion.article
               variants={staggerItem}
               className="experience-card card-olive"
@@ -330,14 +339,16 @@ export default function Page() {
               <span className="card-index">C</span>
               <h3>Full day<br /><em>out there.</em></h3>
               <p>For curious travellers who want more time, more ground and more room for the unexpected.</p>
-              <motion.a href="#contact" whileHover={{ x: 3, transition: SPRING_SNAPPY }}>Build a private day <ArrowUpRight size={15} /></motion.a>
+              <motion.a href="#contact" whileHover={{ x: 3, transition: SPRING_SNAPPY }}>
+                Build a private day <ArrowUpRight size={15} />
+              </motion.a>
             </motion.article>
           </motion.div>
         </SectionReveal>
 
         {/* ── QUOTE BAND ── */}
         <SectionReveal className="quote-band">
-          <p>"The best sightings are not summoned.<br />They are <em>noticed.</em>"</p>
+          <p>&ldquo;The best sightings are not summoned.<br />They are <em>noticed.</em>&rdquo;</p>
           <span>— OUR FIELD GUIDE</span>
         </SectionReveal>
 
@@ -358,12 +369,12 @@ export default function Page() {
             whileInView="visible"
             viewport={{ once: true, margin: '-40px' }}
           >
-            {[
+            {([
               ['05:15', 'The gate opens', 'Coffee, a packed breakfast and the first blue light over the reservoir.'],
               ['06:30', 'Into the grasslands', 'We follow the signs: fresh tracks, alarm calls, the hush of a watching herd.'],
               ['09:00', 'Pause & observe', 'No rushing the moment. A shady tree, a thermos poured, stories shared.'],
               ['11:00', 'Back to base', 'Return with the windows down and the park still unfolding behind you.'],
-            ].map(([time, title, text]) => (
+            ] as [string, string, string][]).map(([time, title, text]) => (
               <motion.div className="timeline-row" variants={staggerItem} key={time}>
                 <span>{time}</span>
                 <div><h3>{title}</h3><p>{text}</p></div>
@@ -385,11 +396,11 @@ export default function Page() {
               whileInView="visible"
               viewport={{ once: true, margin: '-40px' }}
             >
-              {[
+              {([
                 ['01', 'Bring layers', 'Mornings can be cool, afternoons bright. A light layer and sun protection make all the difference.'],
                 ['02', 'Look beyond elephants', 'Keep watch for painted storks, mugger crocodiles, toque macaques and the flash of a serpent eagle.'],
                 ['03', 'Leave only footprints', 'We keep a respectful distance, never feed wildlife and carry our waste back out.'],
-              ].map(([n, t, p]) => (
+              ] as [string, string, string][]).map(([n, t, p]) => (
                 <motion.div variants={staggerItem} key={n}>
                   <span>{n}</span>
                   <h3>{t}</h3>
@@ -409,7 +420,8 @@ export default function Page() {
               <motion.a
                 className="button button-dark"
                 href={GOOGLE_MAPS_URL}
-                target="_blank" rel="noopener noreferrer"
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ y: -4, transition: SPRING_SNAPPY }}
                 whileTap={{ scale: 0.97, transition: SPRING_SNAPPY }}
               >
@@ -418,14 +430,15 @@ export default function Page() {
               <motion.a
                 className="button button-outline"
                 href={TRIPADVISOR_URL}
-                target="_blank" rel="noopener noreferrer"
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ y: -4, transition: SPRING_SNAPPY }}
                 whileTap={{ scale: 0.97, transition: SPRING_SNAPPY }}
               >
                 View on TripAdvisor <ArrowUpRight size={16} />
               </motion.a>
             </div>
-            <blockquote>"A calm, deeply knowledgeable guide. We saw elephants, crocodiles and more birds than we could name — but the real gift was how unhurried the whole morning felt."</blockquote>
+            <blockquote>&ldquo;A calm, deeply knowledgeable guide. We saw elephants, crocodiles and more birds than we could name — but the real gift was how unhurried the whole morning felt.&rdquo;</blockquote>
             <p className="reviewer">— Recent guest, United Kingdom</p>
           </div>
         </SectionReveal>
@@ -435,7 +448,7 @@ export default function Page() {
           <div id="contact" />
           <div className="contact-intro">
             <p className="eyebrow">START A CONVERSATION</p>
-            <h2>Tell us what<br /><em>you're imagining.</em></h2>
+            <h2>Tell us what<br /><em>you&rsquo;re imagining.</em></h2>
             <p>Dates, group size, where you are staying — or simply a feeling. We will come back with honest, useful advice.</p>
             <div className="contact-details">
               <a href="tel:+94771234567"><Phone size={17} /> {phone}</a>
@@ -444,10 +457,7 @@ export default function Page() {
               <span>Udawalawe, Sri Lanka</span>
             </div>
           </div>
-          <form
-            className="inquiry-form"
-            onSubmit={(e) => { e.preventDefault(); setSent(true) }}
-          >
+          <form className="inquiry-form" onSubmit={(e) => { e.preventDefault(); setSent(true) }}>
             <label>Your name<input required name="name" placeholder="How should we call you?" /></label>
             <label>Email address<input required type="email" name="email" placeholder="you@example.com" /></label>
             <label>Tell us a little about your plans<textarea required name="message" rows={4} placeholder="When are you visiting? Who are you travelling with?" /></label>
@@ -457,7 +467,9 @@ export default function Page() {
               whileHover={{ y: -4, transition: SPRING_SNAPPY }}
               whileTap={{ scale: 0.97, transition: SPRING_SNAPPY }}
             >
-              {sent ? <><Check size={16} /> Thank you — we'll be in touch</> : <>Send inquiry <ArrowUpRight size={16} /></>}
+              {sent
+                ? <><Check size={16} /> Thank you — we&rsquo;ll be in touch</>
+                : <>Send inquiry <ArrowUpRight size={16} /></>}
             </motion.button>
           </form>
         </SectionReveal>
@@ -489,7 +501,10 @@ export default function Page() {
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ height: SPRING_SMOOTH, opacity: { duration: 0.22 } }}
+                      transition={{
+                        height: SPRING_SMOOTH,
+                        opacity: { duration: 0.22 },
+                      }}
                     >
                       <p>{answer}</p>
                     </motion.div>
@@ -512,16 +527,19 @@ export default function Page() {
           <a className="brand" href="#top"><span>W</span>ILD UDAWALAWE</a>
           <p>Private safari experiences<br />at the edge of the wild.</p>
           <div className="footer-socials" aria-label="Follow Wild Udawalawe">
-            {[
-              { href: SOCIAL_LINKS.facebook, label: 'Facebook', Icon: Globe2 },
-              { href: SOCIAL_LINKS.instagram, label: 'Instagram', Icon: Camera },
-              { href: SOCIAL_LINKS.youtube, label: 'YouTube', Icon: Play },
-              { href: SOCIAL_LINKS.tripadvisor, label: 'TripAdvisor', Icon: Star },
-            ].map(({ href, label, Icon }) => (
+            {(
+              [
+                { href: SOCIAL_LINKS.facebook, label: 'Facebook', Icon: Globe2 },
+                { href: SOCIAL_LINKS.instagram, label: 'Instagram', Icon: Camera },
+                { href: SOCIAL_LINKS.youtube, label: 'YouTube', Icon: Play },
+                { href: SOCIAL_LINKS.tripadvisor, label: 'TripAdvisor', Icon: Star },
+              ] as { href: string; label: string; Icon: React.ComponentType<{ size?: number }> }[]
+            ).map(({ href, label, Icon }) => (
               <motion.a
                 key={label}
                 href={href}
-                target="_blank" rel="noopener noreferrer"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={label}
                 whileHover={{ y: -3, color: '#d1a05d', transition: SPRING_SNAPPY }}
               >
@@ -530,7 +548,10 @@ export default function Page() {
             ))}
           </div>
           <p>© 2026 Wild Udawalawe<br />Sri Lanka</p>
-          <p className="footer-credit">Designed &amp; developed by<br /><a href="https://nexcy.lk" target="_blank" rel="noopener noreferrer">NexCy Technologies</a></p>
+          <p className="footer-credit">
+            Designed &amp; developed by<br />
+            <a href="https://nexcy.lk" target="_blank" rel="noopener noreferrer">NexCy Technologies</a>
+          </p>
         </footer>
 
         {/* Mobile bottom bar */}

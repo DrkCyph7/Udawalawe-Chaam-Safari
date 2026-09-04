@@ -541,10 +541,6 @@
     user-select: none;
   }
 
-  .blur-in {
-    --tw-enter-blur: 20px;
-  }
-
   @media (hover: hover) {
     .hover\:text-foreground:hover {
       color: var(--foreground);
