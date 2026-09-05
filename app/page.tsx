@@ -119,8 +119,8 @@ function Nav({ menuOpen, setMenuOpen }: { menuOpen: boolean; setMenuOpen: (v: bo
 
   return (
     <nav className="nav">
-      <a className="brand" href="#top" aria-label="Wild Udawalawe home">
-        <span>W</span>ILD<br />UDAWALAWE
+      <a className="brand" href="#top" aria-label="Chaam Safari & Tours home">
+        <span>C</span>HAAM<br />SAFARI &amp; TOURS
       </a>
       <div className={`nav-links ${menuOpen ? 'open' : ''}`}>
         {navHrefs.map((href, i) => (
@@ -174,7 +174,7 @@ export default function Page() {
   const localBusinessSchema = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    name: 'Wild Udawalawe',
+    name: 'Chaam Safari & Tours',
     description: 'Private safari experiences at the edge of Udawalawe National Park, Sri Lanka.',
     areaServed: 'Udawalawe National Park, Sri Lanka',
     sameAs: [SOCIAL_LINKS.facebook, SOCIAL_LINKS.instagram, SOCIAL_LINKS.youtube, SOCIAL_LINKS.tripadvisor],
@@ -524,9 +524,9 @@ export default function Page() {
 
         {/* ── FOOTER ── */}
         <footer>
-          <a className="brand" href="#top"><span>W</span>ILD UDAWALAWE</a>
+          <a className="brand" href="#top"><span>C</span>HAAM SAFARI &amp; TOURS</a>
           <p>Private safari experiences<br />at the edge of the wild.</p>
-          <div className="footer-socials" aria-label="Follow Wild Udawalawe">
+          <div className="footer-socials" aria-label="Follow Chaam Safari & Tours">
             {(
               [
                 { href: SOCIAL_LINKS.facebook, label: 'Facebook', Icon: Globe2 },
@@ -547,7 +547,7 @@ export default function Page() {
               </motion.a>
             ))}
           </div>
-          <p>© 2026 Wild Udawalawe<br />Sri Lanka</p>
+          <p>© 2026 Chaam Safari &amp; Tours<br />Sri Lanka</p>
           <p className="footer-credit">
             Designed &amp; developed by<br />
             <a href="https://nexcy.lk" target="_blank" rel="noopener noreferrer">NexCy Technologies</a>

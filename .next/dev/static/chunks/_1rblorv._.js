@@ -212,22 +212,22 @@ _c1 = WhatsAppButton;
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$3$2e$3_$40$babel$2b$core$40$7$2e$29$2e$7_$40$types$2b$node$40$24$2e$10$2e$4_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                 className: "brand",
                 href: "#top",
-                "aria-label": "Wild Udawalawe home",
+                "aria-label": "Chaam Safari & Tours home",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$3$2e$3_$40$babel$2b$core$40$7$2e$29$2e$7_$40$types$2b$node$40$24$2e$10$2e$4_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                        children: "W"
+                        children: "C"
                     }, void 0, false, {
                         fileName: "[project]/app/page.tsx",
                         lineNumber: 123,
                         columnNumber: 9
                     }, this),
-                    "ILD",
+                    "HAAM",
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$3$2e$3_$40$babel$2b$core$40$7$2e$29$2e$7_$40$types$2b$node$40$24$2e$10$2e$4_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                         fileName: "[project]/app/page.tsx",
                         lineNumber: 123,
-                        columnNumber: 26
+                        columnNumber: 27
                     }, this),
-                    "UDAWALAWE"
+                    "SAFARI & TOURS"
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/page.tsx",
@@ -358,7 +358,7 @@ function Page() {
     const localBusinessSchema = {
         '@context': 'https://schema.org',
         '@type': 'LocalBusiness',
-        name: 'Wild Udawalawe',
+        name: 'Chaam Safari & Tours',
         description: 'Private safari experiences at the edge of Udawalawe National Park, Sri Lanka.',
         areaServed: 'Udawalawe National Park, Sri Lanka',
         sameAs: [
@@ -1847,13 +1847,13 @@ function Page() {
                             href: "#top",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$3$2e$3_$40$babel$2b$core$40$7$2e$29$2e$7_$40$types$2b$node$40$24$2e$10$2e$4_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                    children: "W"
+                                    children: "C"
                                 }, void 0, false, {
                                     fileName: "[project]/app/page.tsx",
                                     lineNumber: 527,
                                     columnNumber: 44
                                 }, this),
-                                "ILD UDAWALAWE"
+                                "HAAM SAFARI & TOURS"
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/page.tsx",
@@ -1877,7 +1877,7 @@ function Page() {
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$3$2e$3_$40$babel$2b$core$40$7$2e$29$2e$7_$40$types$2b$node$40$24$2e$10$2e$4_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "footer-socials",
-                            "aria-label": "Follow Wild Udawalawe",
+                            "aria-label": "Follow Chaam Safari & Tours",
                             children: [
                                 {
                                     href: __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$social$2d$links$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SOCIAL_LINKS"].facebook,
@@ -1928,11 +1928,11 @@ function Page() {
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$3$2e$3_$40$babel$2b$core$40$7$2e$29$2e$7_$40$types$2b$node$40$24$2e$10$2e$4_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             children: [
-                                "© 2026 Wild Udawalawe",
+                                "© 2026 Chaam Safari & Tours",
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f$next$40$16$2e$3$2e$3_$40$babel$2b$core$40$7$2e$29$2e$7_$40$types$2b$node$40$24$2e$10$2e$4_react$2d$dom$40$19$2e$2$2e$4_react$40$19$2e$2$2e$4_$5f$react$40$19$2e$2$2e$4$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                     fileName: "[project]/app/page.tsx",
                                     lineNumber: 550,
-                                    columnNumber: 35
+                                    columnNumber: 45
                                 }, this),
                                 "Sri Lanka"
                             ]
