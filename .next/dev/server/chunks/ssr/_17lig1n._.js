@@ -18,7 +18,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f2e$pnpm$2f40$
 const metadata = {
     title: 'Chaam Safari & Tours | Private Safari Experiences in Sri Lanka',
     description: 'Unhurried, locally led safari experiences at the edge of Udawalawe National Park, Sri Lanka.',
-    metadataBase: new URL('https://wildudawalawe.com'),
+    metadataBase: new URL('https://www.udawalawesafarijeep.lk'),
     alternates: {
         canonical: '/'
     },
@@ -29,7 +29,7 @@ const metadata = {
         siteName: 'Chaam Safari & Tours',
         type: 'website',
         images: [
-            '/safari-hero.png'
+            'https://www.udawalawesafarijeep.lk/safari-hero.png'
         ]
     },
     twitter: {
@@ -37,7 +37,7 @@ const metadata = {
         title: 'Chaam Safari & Tours',
         description: 'Private safari experiences in Sri Lanka.',
         images: [
-            '/safari-hero.png'
+            'https://www.udawalawesafarijeep.lk/safari-hero.png'
         ]
     }
 };

@@ -31,8 +31,8 @@ import {
 import { GOOGLE_MAPS_URL, SOCIAL_LINKS, TRIPADVISOR_URL } from '@/lib/social-links'
 
 /* ─── Constants ────────────────────────────────────────────────── */
-const WHATSAPP = '94771234567'
-const phone = '+94 77 123 4567'
+const WHATSAPP = '94772783223'
+const phone = '+94 77 278 3223'
 const faqs: [string, string][] = [
   ['When is the best time to visit Udawalawe?', 'Udawalawe is rewarding year-round. The dry season from May to September often brings wildlife closer to water, while the green season brings dramatic landscapes and fewer visitors.'],
   ['How long is a safari?', 'Our standard morning and afternoon drives are around three to four hours. We can shape longer private drives around your route and interests.'],
@@ -451,7 +451,7 @@ export default function Page() {
             <h2>Tell us what<br /><em>you&rsquo;re imagining.</em></h2>
             <p>Dates, group size, where you are staying — or simply a feeling. We will come back with honest, useful advice.</p>
             <div className="contact-details">
-              <a href="tel:+94771234567"><Phone size={17} /> {phone}</a>
+              <a href="tel:+94772783223"><Phone size={17} /> {phone}</a>
               <a href={`https://wa.me/${WHATSAPP}`}><span className="wa-dot" /> WhatsApp us directly</a>
               <a href={GOOGLE_MAPS_URL} target="_blank" rel="noopener noreferrer"><MapPin size={17} /> Get directions</a>
               <span>Udawalawe, Sri Lanka</span>
@@ -562,7 +562,7 @@ export default function Page() {
           transition={{ delay: 0.9, ...SPRING_SMOOTH }}
         >
           <a href={`https://wa.me/${WHATSAPP}`}>WhatsApp</a>
-          <a href="tel:+94771234567">Call us</a>
+          <a href="tel:+94772783223">Call us</a>
           <a href={GOOGLE_MAPS_URL} target="_blank" rel="noopener noreferrer">Directions</a>
         </motion.div>
       </main>
