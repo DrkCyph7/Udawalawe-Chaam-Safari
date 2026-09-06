@@ -381,7 +381,7 @@ export default function Page() {
                       : <CountUp to={raw} suffix={suffix} stiffness={45} damping={18} />
                     }
                   </strong>
-                  <span>{label}</span>
+                  <span className="stats-label">{label}</span>
                 </motion.div>
               ))}
             </motion.div>
