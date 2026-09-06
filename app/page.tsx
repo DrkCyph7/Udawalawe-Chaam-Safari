@@ -264,13 +264,20 @@ export default function Page() {
     const formData = new FormData(form)
     
     try {
-      await addDoc(collection(db, 'inquiries'), {
+      const submitPromise = addDoc(collection(db, 'inquiries'), {
         name: formData.get('name'),
         contact: formData.get('contact'),
         message: formData.get('message'),
         status: 'new',
         createdAt: serverTimestamp(),
-      })
+      });
+
+      const timeoutPromise = new Promise((_, reject) => 
+        setTimeout(() => reject(new Error('Request timed out. Please check your network or Firebase configuration.')), 10000)
+      );
+
+      await Promise.race([submitPromise, timeoutPromise]);
+
       setSent(true)
       form.reset()
     } catch (err: any) {
