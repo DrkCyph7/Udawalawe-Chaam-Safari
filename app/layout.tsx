@@ -4,9 +4,9 @@ import { SOCIAL_LINKS } from '@/lib/social-links'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Chaam Safari & Tours | Private Jeep Safari in Udawalawe National Park, Sri Lanka',
+  title: 'Udawalawe Wild Safari Tours | Chaam Safari Sri Lanka',
   description:
-    'Book a private jeep safari in Udawalawe National Park, Sri Lanka. See wild elephants, leopards, crocodiles and 200+ bird species with an experienced local naturalist guide. Morning, afternoon and full-day drives available.',
+    'Book a private Udawalawe safari jeep tour in Sri Lanka with Chaam Safari. Experience an unforgettable elephant safari and wildlife private tours.',
   metadataBase: new URL('https://www.udawalawesafarijeep.lk'),
   alternates: { canonical: '/' },
   keywords: [
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     images: [
       {
-        url: 'https://www.udawalawesafarijeep.lk/safari-hero.png',
+        url: 'https://www.udawalawesafarijeep.lk/safari-hero-og.png',
         width: 1200,
         height: 630,
         alt: 'Wild elephants at the Udawalawe reservoir — Chaam Safari & Tours',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
       'Private jeep safaris with local naturalist guides. Wild elephants, crocodiles, 200+ bird species. Book a morning, afternoon or full-day drive in Udawalawe, Sri Lanka.',
     images: [
       {
-        url: 'https://www.udawalawesafarijeep.lk/safari-hero.png',
+        url: 'https://www.udawalawesafarijeep.lk/safari-hero-og.png',
         alt: 'Wild elephants at the Udawalawe reservoir — Chaam Safari & Tours',
       },
     ],
@@ -75,14 +75,14 @@ export const viewport: Viewport = {
 
 const localBusinessSchema = {
   '@context': 'https://schema.org',
-  '@type': 'TouristAttraction',
+  '@type': 'LocalBusiness',
   name: 'Chaam Safari & Tours',
   alternateName: 'Udawalawe Chaam Safari and Tours',
   description:
     'Private jeep safari experiences at Udawalawe National Park, Sri Lanka. Expert local naturalist guides, morning and afternoon drives, wild elephant sightings.',
   url: 'https://www.udawalawesafarijeep.lk',
   telephone: '+94772783223',
-  image: 'https://www.udawalawesafarijeep.lk/safari-hero.png',
+  image: 'https://www.udawalawesafarijeep.lk/safari-hero-og.png',
   priceRange: '$$',
   address: {
     '@type': 'PostalAddress',

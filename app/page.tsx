@@ -37,10 +37,10 @@ import { GradientText } from '@/components/ui/GradientText'
 const WHATSAPP = '94772783223'
 const phone = '+94 77 278 3223'
 const faqs: [string, string][] = [
-  ['When is the best time to visit Udawalawe National Park?', 'Udawalawe National Park is rewarding year-round, with elephant sightings on nearly every drive. The dry season from May to September often brings larger herds closer to the reservoir, while the green season (October to January) brings dramatic landscapes, migratory birds and fewer visitors.'],
-  ['How long is a safari at Udawalawe?', 'Our standard morning and afternoon drives are approximately three to four hours inside the park. We also offer full-day private safaris for those who want to explore further. The park is open daily from 6:00 AM to 6:00 PM.'],
-  ['Can you arrange hotel transfers to Udawalawe?', 'Yes. Whether you are coming from Ella, Mirissa, Galle, Colombo or anywhere else in Sri Lanka, we can help coordinate a comfortable private transfer directly to the Udawalawe park gate.'],
-  ['Is a Udawalawe safari suitable for children?', 'Absolutely. Udawalawe is one of the most family-friendly national parks in Sri Lanka. We tailor the pace and timing for families, with patient naturalist-guided drives and plenty of space for children to enjoy the wildlife safely from the jeep.'],
+  ['When is the best time to visit Udawalawe National Park?', 'Udawalawe National Park is rewarding year-round, making it perfect for your Udawalawe wildlife tour. The dry season from May to September often brings larger herds closer to the reservoir, while the green season (October to January) brings dramatic landscapes and migratory birds.'],
+  ['How long is a safari at Udawalawe?', 'The typical Udawalawe safari duration is around four hours for a half day and up to ten hours for a full day safari Udawalawe. You can book a morning, afternoon, or full-day private jeep tour depending on your schedule. The park is open daily from 6:00 AM to 6:00 PM.'],
+  ['Can you arrange hotel transfers to Udawalawe?', 'Yes, we provide hotel pickup Udawalawe and nearby areas. Whether you are coming from Ella, Mirissa, Galle, Colombo or anywhere else in Sri Lanka, we can help coordinate a comfortable private transfer directly to the park gate for your private safari.'],
+  ['Is a Udawalawe safari suitable for children?', 'Absolutely. A Udawalawe safari for kids is a fantastic family experience. We tailor the pace and timing for families on our private tours, with patient naturalist-guided drives and plenty of space for children to enjoy the elephants and other wildlife safely from the jeep.'],
 ]
 
 /* ─── Typed transition presets ──────────────────────────────────── */
@@ -66,7 +66,7 @@ const heroEyebrow: Variants = {
    Characters animate individually BUT are wrapped per-word in a
    `display:inline-block; white-space:nowrap` span so the browser
    never breaks a word mid-character at a line boundary.              */
-function HeroH1({ text1, text2 }: { text1: string; text2: string }) {
+function HeroH1({ lines }: { lines: string[] }) {
   const charVariants: Variants = {
     hidden: { opacity: 0, y: 60, rotateX: -45, filter: 'blur(10px)' },
     visible: (i: number) => ({
@@ -112,7 +112,7 @@ function HeroH1({ text1, text2 }: { text1: string; text2: string }) {
               variants={charVariants}
               style={{ display: 'inline-block' }}
             >
-              {' '}
+              {'\u00A0'}
             </motion.span>
           )}
         </span>
@@ -120,21 +120,25 @@ function HeroH1({ text1, text2 }: { text1: string; text2: string }) {
     })
   }
 
-  const charCount1 = Array.from(text1).length + 1
-
+  let cumulativeChars = 0
   return (
     <motion.h1
       initial="hidden"
       animate="visible"
       style={{ perspective: 800 }}
-      aria-label={`${text1} ${text2}`}
+      aria-label={lines.join(' ')}
     >
-      <span style={{ display: 'block' }}>
-        {renderLine(text1, 0)}
-      </span>
-      <em style={{ display: 'block' }}>
-        {renderLine(text2, charCount1)}
-      </em>
+      {lines.map((line, i) => {
+        const offset = cumulativeChars
+        cumulativeChars += Array.from(line).length + 1
+        const isLast = i === lines.length - 1
+        const Tag = isLast ? 'em' : 'span'
+        return (
+          <Tag key={i} style={{ display: 'block' }}>
+            {renderLine(line, offset)}
+          </Tag>
+        )
+      })}
     </motion.h1>
   )
 }
@@ -302,7 +306,7 @@ export default function Page() {
             </motion.p>
 
             {/* H1 — character-by-character cinematic reveal */}
-            <HeroH1 text1="Read the" text2="wild closely." />
+            <HeroH1 lines={["Udawalawe Wild Safari", "Tours with Chaam Safari."]} />
 
             {/* Hero subtext — slide up with blur */}
             <motion.p
@@ -340,29 +344,23 @@ export default function Page() {
         <SectionReveal className="statement section-pad">
           <p className="eyebrow">A DIFFERENT KIND OF GAME DRIVE</p>
           {/* BlurText word-by-word reveal on the headline */}
-          <h2 aria-label="Not a checklist. A conversation with the landscape.">
+          <h2 aria-label="Your Private Safari in Udawalawe.">
             <BlurText
-              text="Not a checklist."
-              animateBy="words"
-              delay={0.08}
-              block
-            />
-            <BlurText
-              text="A conversation"
+              text="Your Private Safari"
               animateBy="words"
               delay={0.08}
               block
             />
             <em style={{ display: 'block' }}>
               <BlurText
-                text="with the landscape."
+                text="in Udawalawe."
                 animateBy="words"
                 delay={0.08}
               />
             </em>
           </h2>
           <div className="statement-bottom">
-            <p>We are a small, locally owned safari team based at the edge of Udawalawe National Park. Our drives are shaped by the season, the light and the animals in front of us — never by a fixed route or a ticking clock.</p>
+            <p>Chaam Safari is run by experienced local guides with over 12 years of tracking wildlife. We offer flexible, private safari Sri Lanka experiences tailored to you, away from the crowds. Enjoy an unhurried Udawalawe wildlife tour led by experts.</p>
             {/* Stats with CountUp */}
             <motion.div
               className="stats"
@@ -404,7 +402,7 @@ export default function Page() {
             <p className="eyebrow">01 / THE PARK</p>
             <h2>
               <BlurText
-                text="Where the dry zone meets the deep green."
+                text="An unforgettable elephant safari Udawalawe."
                 animateBy="words"
                 delay={0.06}
               />
@@ -454,9 +452,9 @@ export default function Page() {
               <span className="card-index">A</span>
               <Compass size={28} strokeWidth={1} />
               <h3>First light</h3>
-              <p>Wake with the park. Cool air, long shadows and the first movement at the waterhole.</p>
+              <p>4 hours [CONFIRM DURATION]. Includes guide, private jeep, park entry ticket, and hotel pickup [CONFIRM INCLUSION].</p>
               <motion.a href="#contact" whileHover={{ x: 3, transition: SPRING_SNAPPY }}>
-                Morning drive <ArrowUpRight size={15} />
+                Book Udawalawe safari <ArrowUpRight size={15} />
               </motion.a>
             </motion.article>
 
@@ -474,7 +472,10 @@ export default function Page() {
               <div className="photo-overlay">
                 <span className="card-index">B</span>
                 <h3>Golden hour</h3>
-                <p>Follow the warmth of the afternoon into a quiet, amber evening.</p>
+                <p>4 hours [CONFIRM DURATION]. Includes guide, private jeep, park entry ticket, and hotel pickup [CONFIRM INCLUSION].</p>
+                <motion.a href="#contact" whileHover={{ x: 3, transition: SPRING_SNAPPY }} style={{ display: 'flex', gap: '10px', marginTop: 'auto', borderBottom: '1px solid currentColor', paddingBottom: '7px', textTransform: 'uppercase', letterSpacing: '.1em', fontSize: '10px' }}>
+                  Book Udawalawe safari <ArrowUpRight size={15} />
+                </motion.a>
               </div>
             </motion.article>
 
@@ -485,9 +486,9 @@ export default function Page() {
             >
               <span className="card-index">C</span>
               <h3>Full day<br /><em>out there.</em></h3>
-              <p>For curious travellers who want more time, more ground and more room for the unexpected.</p>
+              <p>10 hours [CONFIRM DURATION]. Includes guide, private jeep, park entry ticket, and hotel pickup [CONFIRM INCLUSION].</p>
               <motion.a href="#contact" whileHover={{ x: 3, transition: SPRING_SNAPPY }}>
-                Build a private day <ArrowUpRight size={15} />
+                Book Udawalawe safari <ArrowUpRight size={15} />
               </motion.a>
             </motion.article>
           </motion.div>
@@ -633,11 +634,9 @@ export default function Page() {
             </div>
             {/* Blockquote — plain JSX so curly quotes render correctly */}
             <blockquote>
-              “A calm, deeply knowledgeable guide. We saw elephants, crocodiles
-              and more birds than we could name — but the real gift was how
-              unhurried the whole morning felt.”
+              “The whole day was done in a relaxed manner and bespoke to what we wanted to see. We weren't rushed. We weren't driven around with a mass of others. It was all completely calm and at one with nature, which is how a Safari should be.”
             </blockquote>
-            <p className="reviewer">— Recent guest, United Kingdom</p>
+            <p className="reviewer">— TripAdvisor Reviewer</p>
           </div>
         </SectionReveal>
 
