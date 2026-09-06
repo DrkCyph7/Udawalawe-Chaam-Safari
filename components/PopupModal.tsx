@@ -36,7 +36,7 @@ export default function PopupModal() {
         const validPosts = snapshot.docs
           .map((doc) => {
             const data = doc.data();
-            return { id: doc.id, ...data };
+            return { id: doc.id, ...data } as any;
           })
           .filter((p) => {
             const expiry = p.expiryDate?.toDate ? p.expiryDate.toDate() : new Date(p.expiryDate);
