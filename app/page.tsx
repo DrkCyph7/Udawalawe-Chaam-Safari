@@ -29,6 +29,9 @@ import {
   X,
 } from 'lucide-react'
 import { GOOGLE_MAPS_URL, SOCIAL_LINKS, TRIPADVISOR_URL } from '@/lib/social-links'
+import { BlurText } from '@/components/ui/BlurText'
+import { CountUp } from '@/components/ui/CountUp'
+import { GradientText } from '@/components/ui/GradientText'
 
 /* ─── Constants ────────────────────────────────────────────────── */
 const WHATSAPP = '94772783223'
@@ -40,34 +43,103 @@ const faqs: [string, string][] = [
   ['Is this suitable for children?', 'Absolutely. We tailor the pace, vehicle and timing for families, with patient naturalist-guided drives and plenty of space to pause.'],
 ]
 
-/* ─── Typed transition presets ──────────────────────────────────
-   `type` must be the literal 'spring' — not just string.          */
+/* ─── Typed transition presets ──────────────────────────────────── */
 const SPRING_SMOOTH: Transition = { type: 'spring', stiffness: 60, damping: 20, mass: 1 }
 const SPRING_SNAPPY: Transition = { type: 'spring', stiffness: 280, damping: 28, mass: 0.8 }
 const SPRING_GENTLE: Transition = { type: 'spring', stiffness: 40, damping: 18, mass: 1.2 }
 const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
-/* ─── Variants ──────────────────────────────────────────────────── */
-const staggerContainer: Variants = {
+/* ─── Hero Variants (Framer Motion — enhanced) ───────────────────── */
+const heroStagger: Variants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
+  visible: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
 }
-const staggerItem: Variants = {
-  hidden: { opacity: 0, y: 28, filter: 'blur(4px)' },
+const heroEyebrow: Variants = {
+  hidden: { opacity: 0, y: 16, filter: 'blur(6px)' },
   visible: {
     opacity: 1, y: 0, filter: 'blur(0px)',
-    transition: SPRING_SMOOTH,
-  },
-}
-const heroH1Variants: Variants = {
-  hidden: { opacity: 0, y: 40, filter: 'blur(8px)' },
-  visible: {
-    opacity: 1, y: 0, filter: 'blur(0px)',
-    transition: { ...SPRING_GENTLE, delay: 0.1 },
+    transition: { ...SPRING_SMOOTH, delay: 0.1 },
   },
 }
 
-/* ─── Section reveal ────────────────────────────────────────────── */
+/* ─── Hero H1 — word-grouped character animation ─────────────────────
+   Characters animate individually BUT are wrapped per-word in a
+   `display:inline-block; white-space:nowrap` span so the browser
+   never breaks a word mid-character at a line boundary.              */
+function HeroH1({ text1, text2 }: { text1: string; text2: string }) {
+  const charVariants: Variants = {
+    hidden: { opacity: 0, y: 60, rotateX: -45, filter: 'blur(10px)' },
+    visible: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      rotateX: 0,
+      filter: 'blur(0px)',
+      transition: {
+        type: 'spring',
+        stiffness: 50,
+        damping: 16,
+        delay: 0.3 + i * 0.04,
+      },
+    }),
+  }
+
+  function renderLine(text: string, charOffset: number) {
+    const words = text.split(' ')
+    let charIndex = charOffset
+    return words.map((word, wi) => {
+      const chars = Array.from(word)
+      const wordStart = charIndex
+      charIndex += chars.length + 1 // +1 for the space
+      return (
+        <span
+          key={wi}
+          style={{ display: 'inline-block', whiteSpace: 'nowrap' }}
+        >
+          {chars.map((c, ci) => (
+            <motion.span
+              key={ci}
+              custom={wordStart + ci}
+              variants={charVariants}
+              style={{ display: 'inline-block' }}
+            >
+              {c}
+            </motion.span>
+          ))}
+          {/* Space after every word except last */}
+          {wi < words.length - 1 && (
+            <motion.span
+              custom={wordStart + chars.length}
+              variants={charVariants}
+              style={{ display: 'inline-block' }}
+            >
+              {' '}
+            </motion.span>
+          )}
+        </span>
+      )
+    })
+  }
+
+  const charCount1 = Array.from(text1).length + 1
+
+  return (
+    <motion.h1
+      initial="hidden"
+      animate="visible"
+      style={{ perspective: 800 }}
+      aria-label={`${text1} ${text2}`}
+    >
+      <span style={{ display: 'block' }}>
+        {renderLine(text1, 0)}
+      </span>
+      <em style={{ display: 'block' }}>
+        {renderLine(text2, charCount1)}
+      </em>
+    </motion.h1>
+  )
+}
+
+/* ─── Section reveal (generic) ──────────────────────────────────── */
 function SectionReveal({
   children,
   className = '',
@@ -91,6 +163,19 @@ function SectionReveal({
     >
       {children}
     </motion.div>
+  )
+}
+
+/* ─── Animated line (for timeline) ─────────────────────────────── */
+function AnimatedLine({ inView }: { inView: boolean }) {
+  return (
+    <motion.div
+      className="timeline-progress-line"
+      initial={{ scaleX: 0 }}
+      animate={inView ? { scaleX: 1 } : { scaleX: 0 }}
+      transition={{ duration: 1.4, ease: EASE_OUT_EXPO, delay: 0.2 }}
+      style={{ transformOrigin: 'left' }}
+    />
   )
 }
 
@@ -164,12 +249,26 @@ export default function Page() {
   const [sent, setSent] = useState(false)
   const reduced = useReducedMotion()
 
-  /* Parallax hero — spring-smoothed scroll */
+  /* Parallax hero */
   const { scrollY } = useScroll()
   const rawHeroY = useTransform(scrollY, [0, 600], [0, reduced ? 0 : 90])
   const heroY = useSpring(rawHeroY, { stiffness: 80, damping: 25 })
   const rawHeroScale = useTransform(scrollY, [0, 600], [1, reduced ? 1 : 1.06])
   const heroScale = useSpring(rawHeroScale, { stiffness: 80, damping: 25 })
+
+  /* Timeline inView */
+  const timelineRef = useRef<HTMLDivElement>(null)
+  const timelineInView = useInView(timelineRef, { once: true, margin: '-40px 0px' })
+
+  /* Stagger container */
+  const staggerContainer: Variants = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
+  }
+  const staggerItem: Variants = {
+    hidden: { opacity: 0, y: 28, filter: 'blur(4px)' },
+    visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: SPRING_SMOOTH },
+  }
 
   return (
     <MotionConfig reducedMotion="user">
@@ -193,20 +292,34 @@ export default function Page() {
 
           <motion.div
             className="hero-copy"
-            variants={staggerContainer}
+            variants={heroStagger}
             initial="hidden"
             animate="visible"
           >
-            <motion.p variants={staggerItem} className="eyebrow">
+            {/* Eyebrow — blur + fade stagger */}
+            <motion.p variants={heroEyebrow} className="eyebrow">
               PRIVATE SAFARI EXPERIENCES · SRI LANKA
             </motion.p>
-            <motion.h1 variants={heroH1Variants}>
-              Read the<br /><em>wild</em> closely.
-            </motion.h1>
-            <motion.p variants={staggerItem} className="hero-text">
+
+            {/* H1 — character-by-character cinematic reveal */}
+            <HeroH1 text1="Read the" text2="wild closely." />
+
+            {/* Hero subtext — slide up with blur */}
+            <motion.p
+              className="hero-text"
+              initial={{ opacity: 0, y: 32, filter: 'blur(8px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{ ...SPRING_GENTLE, delay: 1.1 }}
+            >
               Unhurried days, expert eyes and the quiet thrill of finding elephants in their natural home.
             </motion.p>
-            <motion.div variants={staggerItem}>
+
+            {/* CTA */}
+            <motion.div
+              initial={{ opacity: 0, y: 24, filter: 'blur(6px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{ ...SPRING_SMOOTH, delay: 1.35 }}
+            >
               <WhatsAppButton />
             </motion.div>
           </motion.div>
@@ -215,7 +328,7 @@ export default function Page() {
             className="hero-foot"
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.1, duration: 0.7, ease: EASE_OUT_EXPO }}
+            transition={{ delay: 1.7, duration: 0.7, ease: EASE_OUT_EXPO }}
           >
             <span>06°26′N 80°53′E</span>
             <span>Udawalawe National Park</span>
@@ -226,9 +339,31 @@ export default function Page() {
         {/* ── STATEMENT ── */}
         <SectionReveal className="statement section-pad">
           <p className="eyebrow">A DIFFERENT KIND OF GAME DRIVE</p>
-          <h2>Not a checklist.<br /><em>A conversation</em><br />with the landscape.</h2>
+          {/* BlurText word-by-word reveal on the headline */}
+          <h2 aria-label="Not a checklist. A conversation with the landscape.">
+            <BlurText
+              text="Not a checklist."
+              animateBy="words"
+              delay={0.08}
+              block
+            />
+            <BlurText
+              text="A conversation"
+              animateBy="words"
+              delay={0.08}
+              block
+            />
+            <em style={{ display: 'block' }}>
+              <BlurText
+                text="with the landscape."
+                animateBy="words"
+                delay={0.08}
+              />
+            </em>
+          </h2>
           <div className="statement-bottom">
             <p>We are a small, local safari team based at the edge of Udawalawe. Our drives are shaped by the weather, the light and the animals in front of us — never by a fixed route.</p>
+            {/* Stats with CountUp */}
             <motion.div
               className="stats"
               variants={staggerContainer}
@@ -236,9 +371,18 @@ export default function Page() {
               whileInView="visible"
               viewport={{ once: true, margin: '-60px' }}
             >
-              {[['12+', 'years in the park'], ['01—06', 'guests per jeep'], ['100%', 'locally led']].map(([val, label]) => (
+              {([
+                { raw: 12, display: '12', suffix: '+', label: 'years in the park' },
+                { raw: 6, display: '01—06', suffix: '', label: 'guests per jeep', isRange: true },
+                { raw: 100, display: '100', suffix: '%', label: 'locally led' },
+              ] as { raw: number; display: string; suffix: string; label: string; isRange?: boolean }[]).map(({ raw, display, suffix, label, isRange }) => (
                 <motion.div key={label} variants={staggerItem}>
-                  <strong>{val}</strong>
+                  <strong>
+                    {isRange
+                      ? '01—06'
+                      : <CountUp to={raw} suffix={suffix} stiffness={45} damping={18} />
+                    }
+                  </strong>
                   <span>{label}</span>
                 </motion.div>
               ))}
@@ -258,8 +402,14 @@ export default function Page() {
           </div>
           <div className="story-copy">
             <p className="eyebrow">01 / THE PARK</p>
-            <h2>Where the dry zone meets the deep green.</h2>
-            <p>Udawalawe is one of Sri Lanka's most reliable places to see wild elephants. Beyond the open plains, its reservoirs, riverine forests and rocky ridges hold an extraordinary cast of birds, reptiles and mammals.</p>
+            <h2>
+              <BlurText
+                text="Where the dry zone meets the deep green."
+                animateBy="words"
+                delay={0.06}
+              />
+            </h2>
+            <p>Udawalawe is one of Sri Lanka&apos;s most reliable places to see wild elephants. Beyond the open plains, its reservoirs, riverine forests and rocky ridges hold an extraordinary cast of birds, reptiles and mammals.</p>
             <motion.a
               className="text-link"
               href="#guide"
@@ -276,7 +426,16 @@ export default function Page() {
           <div className="section-heading">
             <div>
               <p className="eyebrow">02 / THE EXPERIENCE</p>
-              <h2>Choose your<br /><em>kind of day.</em></h2>
+              <h2>
+                Choose your<br />
+                <em>
+                  <BlurText
+                    text="kind of day."
+                    animateBy="words"
+                    delay={0.09}
+                  />
+                </em>
+              </h2>
             </div>
             <p>Every drive is private, flexible and guided by a naturalist who knows these roads as living, changing things.</p>
           </div>
@@ -290,7 +449,7 @@ export default function Page() {
             <motion.article
               variants={staggerItem}
               className="experience-card card-dark"
-              whileHover={{ y: -8, boxShadow: '0 24px 48px rgba(0,0,0,.22)', transition: SPRING_SNAPPY }}
+              whileHover={{ y: -10, boxShadow: '0 28px 56px rgba(0,0,0,.28)', transition: SPRING_SNAPPY }}
             >
               <span className="card-index">A</span>
               <Compass size={28} strokeWidth={1} />
@@ -304,7 +463,7 @@ export default function Page() {
             <motion.article
               variants={staggerItem}
               className="experience-card card-photo"
-              whileHover={{ y: -8, transition: SPRING_SNAPPY }}
+              whileHover={{ y: -10, transition: SPRING_SNAPPY }}
             >
               <Image
                 src="/safari-elephants.png"
@@ -322,7 +481,7 @@ export default function Page() {
             <motion.article
               variants={staggerItem}
               className="experience-card card-olive"
-              whileHover={{ y: -8, boxShadow: '0 24px 48px rgba(0,0,0,.18)', transition: SPRING_SNAPPY }}
+              whileHover={{ y: -10, boxShadow: '0 28px 56px rgba(0,0,0,.22)', transition: SPRING_SNAPPY }}
             >
               <span className="card-index">C</span>
               <h3>Full day<br /><em>out there.</em></h3>
@@ -334,9 +493,21 @@ export default function Page() {
           </motion.div>
         </SectionReveal>
 
-        {/* ── QUOTE BAND ── */}
+        {/* ── QUOTE BAND — GradientText shimmer on em ── */}
         <SectionReveal className="quote-band">
-          <p>&ldquo;The best sightings are not summoned.<br />They are <em>noticed.</em>&rdquo;</p>
+          <p>
+            &ldquo;The best sightings are not summoned.<br />
+            They are{' '}
+            <em>
+              <GradientText
+                colors={['#24372a', '#3d6b4f', '#24372a', '#5a8a6a', '#24372a']}
+                speed={4}
+              >
+                noticed.
+              </GradientText>
+            </em>
+            &rdquo;
+          </p>
           <span>— OUR FIELD GUIDE</span>
         </SectionReveal>
 
@@ -346,37 +517,59 @@ export default function Page() {
           <div className="section-heading">
             <div>
               <p className="eyebrow">03 / A TYPICAL MORNING</p>
-              <h2>Let the day<br /><em>unfold.</em></h2>
+              <h2>
+                Let the day<br />
+                <em>
+                  <BlurText
+                    text="unfold."
+                    animateBy="chars"
+                    delay={0.06}
+                  />
+                </em>
+              </h2>
             </div>
             <p>There is a rhythm to a good safari. We leave space for it.</p>
           </div>
-          <motion.div
-            className="timeline-list"
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-40px' }}
-          >
-            {([
-              ['05:15', 'The gate opens', 'Coffee, a packed breakfast and the first blue light over the reservoir.'],
-              ['06:30', 'Into the grasslands', 'We follow the signs: fresh tracks, alarm calls, the hush of a watching herd.'],
-              ['09:00', 'Pause & observe', 'No rushing the moment. A shady tree, a thermos poured, stories shared.'],
-              ['11:00', 'Back to base', 'Return with the windows down and the park still unfolding behind you.'],
-            ] as [string, string, string][]).map(([time, title, text]) => (
-              <motion.div className="timeline-row" variants={staggerItem} key={time}>
-                <span>{time}</span>
-                <div><h3>{title}</h3><p>{text}</p></div>
-                <ArrowDownRight size={18} />
-              </motion.div>
-            ))}
-          </motion.div>
+          <div ref={timelineRef}>
+            <AnimatedLine inView={timelineInView} />
+            <motion.div
+              className="timeline-list"
+              variants={staggerContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: '-40px' }}
+            >
+              {([
+                ['05:15', 'The gate opens', 'Coffee, a packed breakfast and the first blue light over the reservoir.'],
+                ['06:30', 'Into the grasslands', 'We follow the signs: fresh tracks, alarm calls, the hush of a watching herd.'],
+                ['09:00', 'Pause & observe', 'No rushing the moment. A shady tree, a thermos poured, stories shared.'],
+                ['11:00', 'Back to base', 'Return with the windows down and the park still unfolding behind you.'],
+              ] as [string, string, string][]).map(([time, title, text]) => (
+                <motion.div
+                  className="timeline-row"
+                  variants={staggerItem}
+                  key={time}
+                >
+                  <span>{time}</span>
+                  <div><h3>{title}</h3><p>{text}</p></div>
+                  <ArrowDownRight size={18} />
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
         </SectionReveal>
 
         {/* ── GUIDE ── */}
         <SectionReveal className="guide" delay={0.05}>
           <div id="guide" className="guide-inner">
             <p className="eyebrow">FIELD NOTES / UDAWALAWE</p>
-            <h2>A little preparation<br /><em>goes a long way.</em></h2>
+            <h2>
+              <BlurText
+                text="A little preparation goes a long way."
+                animateBy="words"
+                delay={0.07}
+              />
+            </h2>
             <motion.div
               className="guide-grid"
               variants={staggerContainer}
@@ -389,8 +582,19 @@ export default function Page() {
                 ['02', 'Look beyond elephants', 'Keep watch for painted storks, mugger crocodiles, toque macaques and the flash of a serpent eagle.'],
                 ['03', 'Leave only footprints', 'We keep a respectful distance, never feed wildlife and carry our waste back out.'],
               ] as [string, string, string][]).map(([n, t, p]) => (
-                <motion.div variants={staggerItem} key={n}>
-                  <span>{n}</span>
+                <motion.div
+                  variants={staggerItem}
+                  key={n}
+                  whileHover={{ y: -6, transition: SPRING_SNAPPY }}
+                >
+                  <span className="guide-number">
+                    <GradientText
+                      colors={['#d1a05d', '#f0d8a0', '#b47b42', '#e8c88a', '#d1a05d']}
+                      speed={6}
+                    >
+                      {n}
+                    </GradientText>
+                  </span>
                   <h3>{t}</h3>
                   <p>{p}</p>
                 </motion.div>
@@ -426,7 +630,12 @@ export default function Page() {
                 View on TripAdvisor <ArrowUpRight size={16} />
               </motion.a>
             </div>
-            <blockquote>&ldquo;A calm, deeply knowledgeable guide. We saw elephants, crocodiles and more birds than we could name — but the real gift was how unhurried the whole morning felt.&rdquo;</blockquote>
+            {/* Blockquote — plain JSX so curly quotes render correctly */}
+            <blockquote>
+              “A calm, deeply knowledgeable guide. We saw elephants, crocodiles
+              and more birds than we could name — but the real gift was how
+              unhurried the whole morning felt.”
+            </blockquote>
             <p className="reviewer">— Recent guest, United Kingdom</p>
           </div>
         </SectionReveal>
@@ -436,7 +645,16 @@ export default function Page() {
           <div id="contact" />
           <div className="contact-intro">
             <p className="eyebrow">START A CONVERSATION</p>
-            <h2>Tell us what<br /><em>you&rsquo;re imagining.</em></h2>
+            <h2>
+              Tell us what<br />
+              <em>
+                <BlurText
+                  text="you're imagining."
+                  animateBy="words"
+                  delay={0.08}
+                />
+              </em>
+            </h2>
             <p>Dates, group size, where you are staying — or simply a feeling. We will come back with honest, useful advice.</p>
             <div className="contact-details">
               <a href="tel:+94772783223"><Phone size={17} /> {phone}</a>
@@ -456,7 +674,7 @@ export default function Page() {
               whileTap={{ scale: 0.97, transition: SPRING_SNAPPY }}
             >
               {sent
-                ? <><Check size={16} /> Thank you — we&rsquo;ll be in touch</>
+                ? <><Check size={16} /> Thank you — we&apos;ll be in touch</>
                 : <>Send inquiry <ArrowUpRight size={16} /></>}
             </motion.button>
           </form>
@@ -506,7 +724,16 @@ export default function Page() {
         {/* ── FINAL CTA ── */}
         <SectionReveal className="final-cta">
           <p className="eyebrow">THE PARK IS WAITING</p>
-          <h2>Go where the<br /><em>quiet begins.</em></h2>
+          <h2>
+            Go where the<br />
+            <em>
+              <BlurText
+                text="quiet begins."
+                animateBy="words"
+                delay={0.1}
+              />
+            </em>
+          </h2>
           <WhatsAppButton label="Plan your safari" />
         </SectionReveal>
 

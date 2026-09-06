@@ -353,12 +353,54 @@
     position: fixed;
   }
 
+  .container {
+    width: 100%;
+  }
+
+  @media (min-width: 40rem) {
+    .container {
+      max-width: 40rem;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .container {
+      max-width: 48rem;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .container {
+      max-width: 64rem;
+    }
+  }
+
+  @media (min-width: 80rem) {
+    .container {
+      max-width: 80rem;
+    }
+  }
+
+  @media (min-width: 96rem) {
+    .container {
+      max-width: 96rem;
+    }
+  }
+
   .block {
     display: block;
   }
 
   .hidden {
     display: none;
+  }
+
+  .inline {
+    display: inline;
+  }
+
+  .inline-block {
+    display: inline-block;
   }
 
   .inline-flex {
@@ -407,6 +449,37 @@
 
   .transform {
     transform: var(--tw-rotate-x, ) var(--tw-rotate-y, ) var(--tw-rotate-z, ) var(--tw-skew-x, ) var(--tw-skew-y, );
+  }
+
+  .shimmer {
+    --_spread: var(--shimmer-spread, calc(3ch + 40px));
+    --_base: currentColor;
+    --_highlight: var(--shimmer-color, oklch(from currentColor l c h / calc(alpha* .2)));
+    background-image: var(--shimmer-image, linear-gradient(calc(90deg + var(--shimmer-angle)), var(--_base) calc(50% - var(--_spread)), var(--_highlight) calc(50% - var(--_spread) * .5), var(--_highlight) 50%, var(--_highlight) calc(50% + var(--_spread) * .5), var(--_base) calc(50% + var(--_spread))));
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .shimmer {
+      background-image: var(--shimmer-image, linear-gradient(calc(90deg + var(--shimmer-angle)), var(--_base) calc(50% - var(--_spread)), color-mix(in oklch, var(--_highlight), var(--_base) 50%) calc(50% - var(--_spread) * .5), var(--_highlight) 50%, color-mix(in oklch, var(--_highlight), var(--_base) 50%) calc(50% + var(--_spread) * .5), var(--_base) calc(50% + var(--_spread))));
+    }
+  }
+
+  .shimmer {
+    background-repeat: no-repeat;
+    background-size: calc(200% + var(--_spread) * 2) 100%;
+    -webkit-text-fill-color: var(--shimmer-text-fill, transparent);
+    animation: tw-shimmer var(--shimmer-duration, 2s) linear infinite;
+    background-position: 0 0;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  .shimmer:is(.dark *) {
+    --_highlight: var(--shimmer-color, oklch(from currentColor max(.8, calc(l + .4)) c h / calc(alpha + .4)));
+  }
+
+  .shimmer:where([dir="rtl"], [dir="rtl"] *) {
+    animation-direction: reverse;
   }
 
   .items-center {
@@ -513,6 +586,11 @@
   .outline {
     outline-style: var(--tw-outline-style);
     outline-width: 1px;
+  }
+
+  .blur {
+    --tw-blur: blur(8px);
+    filter: var(--tw-blur, ) var(--tw-brightness, ) var(--tw-contrast, ) var(--tw-grayscale, ) var(--tw-hue-rotate, ) var(--tw-invert, ) var(--tw-saturate, ) var(--tw-sepia, ) var(--tw-drop-shadow, );
   }
 
   .filter {
@@ -1523,6 +1601,10 @@ button {
   font-size: 14px;
 }
 
+.faq-answer {
+  overflow: hidden;
+}
+
 .final-cta {
   background: var(--olive);
   color: var(--paper);
@@ -1657,12 +1739,17 @@ footer p {
   }
 
   .stats {
-    flex-wrap: wrap;
-    gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 16px;
+    display: grid;
+  }
+
+  .stats div:last-child {
+    grid-column: span 2;
   }
 
   .stats strong {
-    font-size: 22px;
+    font-size: 24px;
   }
 
   .split-story {
@@ -1711,12 +1798,21 @@ footer p {
   }
 
   .timeline-row {
-    grid-template-columns: 60px 1fr;
-    gap: 14px;
+    grid-template-columns: 55px 1fr;
+    gap: 16px;
   }
 
   .timeline-row > svg {
     display: none;
+  }
+
+  .timeline-row h3 {
+    margin-bottom: 4px;
+    font-size: 20px;
+  }
+
+  .timeline-row > span {
+    font-size: 15px;
   }
 
   .inquiry-form {
@@ -1781,6 +1877,41 @@ footer p {
   .button:hover svg, .card-photo:hover img {
     transform: none !important;
   }
+}
+
+@keyframes gradient-sweep {
+  0% {
+    background-position: 0%;
+  }
+
+  100% {
+    background-position: 200%;
+  }
+}
+
+.timeline-progress-line {
+  background: linear-gradient(90deg, var(--bronze), #e8c88a, var(--bronze));
+  will-change: transform;
+  border-radius: 2px;
+  height: 2px;
+  margin-bottom: 0;
+}
+
+.guide-number {
+  margin-bottom: 18px;
+  font-family: Georgia, serif;
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 1;
+  display: block;
+}
+
+.blur-block {
+  display: block;
+}
+
+.hero h1 {
+  transform-style: preserve-3d;
 }
 
 @property --tw-rotate-x {
@@ -1986,6 +2117,16 @@ footer p {
   syntax: "*";
   inherits: false;
   initial-value: 0;
+}
+
+@keyframes tw-shimmer {
+  from {
+    background-position: 100% 0;
+  }
+
+  to {
+    background-position: 0 0;
+  }
 }
 
 /*# sourceMappingURL=app_globals_0yg4wg8.css.map*/
