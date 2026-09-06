@@ -171,22 +171,10 @@ export default function Page() {
   const rawHeroScale = useTransform(scrollY, [0, 600], [1, reduced ? 1 : 1.06])
   const heroScale = useSpring(rawHeroScale, { stiffness: 80, damping: 25 })
 
-  const localBusinessSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: 'Chaam Safari & Tours',
-    description: 'Private safari experiences at the edge of Udawalawe National Park, Sri Lanka.',
-    areaServed: 'Udawalawe National Park, Sri Lanka',
-    sameAs: [SOCIAL_LINKS.facebook, SOCIAL_LINKS.instagram, SOCIAL_LINKS.youtube, SOCIAL_LINKS.tripadvisor],
-  }
-
   return (
     <MotionConfig reducedMotion="user">
       <main>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
-        />
+
         <Nav menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
 
         {/* ── HERO ── */}
