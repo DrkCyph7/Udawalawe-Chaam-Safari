@@ -37,10 +37,10 @@ import { GradientText } from '@/components/ui/GradientText'
 const WHATSAPP = '94772783223'
 const phone = '+94 77 278 3223'
 const faqs: [string, string][] = [
-  ['When is the best time to visit Udawalawe?', 'Udawalawe is rewarding year-round. The dry season from May to September often brings wildlife closer to water, while the green season brings dramatic landscapes and fewer visitors.'],
-  ['How long is a safari?', 'Our standard morning and afternoon drives are around three to four hours. We can shape longer private drives around your route and interests.'],
-  ['Can you arrange transfers?', 'Yes. Tell us where you are coming from and we will help coordinate a comfortable transfer to the park gate.'],
-  ['Is this suitable for children?', 'Absolutely. We tailor the pace, vehicle and timing for families, with patient naturalist-guided drives and plenty of space to pause.'],
+  ['When is the best time to visit Udawalawe National Park?', 'Udawalawe National Park is rewarding year-round, with elephant sightings on nearly every drive. The dry season from May to September often brings larger herds closer to the reservoir, while the green season (October to January) brings dramatic landscapes, migratory birds and fewer visitors.'],
+  ['How long is a safari at Udawalawe?', 'Our standard morning and afternoon drives are approximately three to four hours inside the park. We also offer full-day private safaris for those who want to explore further. The park is open daily from 6:00 AM to 6:00 PM.'],
+  ['Can you arrange hotel transfers to Udawalawe?', 'Yes. Whether you are coming from Ella, Mirissa, Galle, Colombo or anywhere else in Sri Lanka, we can help coordinate a comfortable private transfer directly to the Udawalawe park gate.'],
+  ['Is a Udawalawe safari suitable for children?', 'Absolutely. Udawalawe is one of the most family-friendly national parks in Sri Lanka. We tailor the pace and timing for families, with patient naturalist-guided drives and plenty of space for children to enjoy the wildlife safely from the jeep.'],
 ]
 
 /* ─── Typed transition presets ──────────────────────────────────── */
@@ -187,7 +187,7 @@ function WhatsAppButton({ label = 'Plan your safari' }: { label?: string }) {
       className="button button-bronze"
       href={`https://wa.me/${WHATSAPP}?text=${message}`}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
       whileHover={{ y: -4, transition: SPRING_SNAPPY }}
       whileTap={{ scale: 0.96, transition: SPRING_SNAPPY }}
     >
@@ -281,7 +281,7 @@ export default function Page() {
           <motion.div className="hero-media" style={{ y: heroY, scale: heroScale }}>
             <Image
               src="/safari-hero.png"
-              alt="Elephants gathered beside a lake in Udawalawe National Park"
+              alt="Herd of wild Sri Lankan elephants drinking at the Udawalawe reservoir at sunrise — Udawalawe National Park, Sri Lanka"
               fill
               priority
               sizes="100vw"
@@ -330,7 +330,7 @@ export default function Page() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.7, duration: 0.7, ease: EASE_OUT_EXPO }}
           >
-            <span>06°26′N 80°53′E</span>
+            <span>6°28′N 80°54′E</span>
             <span>Udawalawe National Park</span>
             <span>Scroll to explore ↓</span>
           </motion.div>
@@ -362,7 +362,7 @@ export default function Page() {
             </em>
           </h2>
           <div className="statement-bottom">
-            <p>We are a small, local safari team based at the edge of Udawalawe. Our drives are shaped by the weather, the light and the animals in front of us — never by a fixed route.</p>
+            <p>We are a small, locally owned safari team based at the edge of Udawalawe National Park. Our drives are shaped by the season, the light and the animals in front of us — never by a fixed route or a ticking clock.</p>
             {/* Stats with CountUp */}
             <motion.div
               className="stats"
@@ -395,7 +395,7 @@ export default function Page() {
           <div className="story-image">
             <Image
               src="/safari-landscape.png"
-              alt="Safari track through Udawalawe grassland"
+              alt="Jeep safari track winding through golden grasslands of Udawalawe National Park with distant mountains, Sri Lanka"
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
             />
@@ -409,7 +409,7 @@ export default function Page() {
                 delay={0.06}
               />
             </h2>
-            <p>Udawalawe is one of Sri Lanka&apos;s most reliable places to see wild elephants. Beyond the open plains, its reservoirs, riverine forests and rocky ridges hold an extraordinary cast of birds, reptiles and mammals.</p>
+            <p>Udawalawe is one of Sri Lanka&apos;s most reliable places to see wild Asian elephants — home to over 500 individuals. Beyond the open plains, its reservoirs, riverine forests and rocky ridges shelter spotted deer, water buffalo, crocodiles and over 200 bird species.</p>
             <motion.a
               className="text-link"
               href="#guide"
@@ -467,7 +467,7 @@ export default function Page() {
             >
               <Image
                 src="/safari-elephants.png"
-                alt="Sri Lankan elephant in lush Udawalawe forest"
+                alt="Close-up of a wild Sri Lankan elephant feeding in the riverine forests of Udawalawe National Park"
                 fill
                 sizes="(max-width: 768px) 100vw, 33vw"
               />
@@ -540,10 +540,11 @@ export default function Page() {
               viewport={{ once: true, margin: '-40px' }}
             >
               {([
-                ['05:15', 'The gate opens', 'Coffee, a packed breakfast and the first blue light over the reservoir.'],
-                ['06:30', 'Into the grasslands', 'We follow the signs: fresh tracks, alarm calls, the hush of a watching herd.'],
+                ['05:45', 'Meet at the gate', 'Coffee, a packed breakfast and the first blue light over the Udawalawe reservoir.'],
+                ['06:00', 'Into the grasslands', 'The gate opens. We follow fresh tracks, alarm calls and the hush of a watching herd.'],
                 ['09:00', 'Pause & observe', 'No rushing the moment. A shady tree, a thermos poured, stories shared.'],
                 ['11:00', 'Back to base', 'Return with the windows down and the park still unfolding behind you.'],
+                // Note: Udawalawe National Park gates open at 6:00 AM and close at 6:00 PM daily.
               ] as [string, string, string][]).map(([time, title, text]) => (
                 <motion.div
                   className="timeline-row"
@@ -579,8 +580,8 @@ export default function Page() {
             >
               {([
                 ['01', 'Bring layers', 'Mornings can be cool, afternoons bright. A light layer and sun protection make all the difference.'],
-                ['02', 'Look beyond elephants', 'Keep watch for painted storks, mugger crocodiles, toque macaques and the flash of a serpent eagle.'],
-                ['03', 'Leave only footprints', 'We keep a respectful distance, never feed wildlife and carry our waste back out.'],
+                ['02', 'Look beyond elephants', 'Keep watch for painted storks, mugger crocodiles, spotted deer, water buffalo, toque macaques and the flash of a crested serpent eagle.'],
+                ['03', 'Leave only footprints', 'We keep a respectful distance, never feed wildlife and carry all waste back out of the park.'],
               ] as [string, string, string][]).map(([n, t, p]) => (
                 <motion.div
                   variants={staggerItem}
@@ -655,7 +656,7 @@ export default function Page() {
                 />
               </em>
             </h2>
-            <p>Dates, group size, where you are staying — or simply a feeling. We will come back with honest, useful advice.</p>
+            <p>Dates, group size, where you are staying — or simply an idea. We will come back with honest, practical advice and help you plan the perfect Udawalawe safari.</p>
             <div className="contact-details">
               <a href="tel:+94772783223"><Phone size={17} /> {phone}</a>
               <a href={`https://wa.me/${WHATSAPP}`}><span className="wa-dot" /> WhatsApp us directly</a>
@@ -664,9 +665,9 @@ export default function Page() {
             </div>
           </div>
           <form className="inquiry-form" onSubmit={(e) => { e.preventDefault(); setSent(true) }}>
-            <label>Your name<input required name="name" placeholder="How should we call you?" /></label>
-            <label>Email address<input required type="email" name="email" placeholder="you@example.com" /></label>
-            <label>Tell us a little about your plans<textarea required name="message" rows={4} placeholder="When are you visiting? Who are you travelling with?" /></label>
+            <label>Your name<input required name="name" autoComplete="name" placeholder="How should we call you?" /></label>
+            <label>Email address<input required type="email" name="email" autoComplete="email" placeholder="you@example.com" /></label>
+            <label>Tell us a little about your plans<textarea required name="message" rows={4} placeholder="When are you visiting? How many people? Any special interests?" /></label>
             <motion.button
               className="button button-dark"
               type="submit"
@@ -776,7 +777,7 @@ export default function Page() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.9, ...SPRING_SMOOTH }}
         >
-          <a href={`https://wa.me/${WHATSAPP}`}>WhatsApp</a>
+          <a href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>
           <a href="tel:+94772783223">Call us</a>
           <a href={GOOGLE_MAPS_URL} target="_blank" rel="noopener noreferrer">Directions</a>
         </motion.div>
