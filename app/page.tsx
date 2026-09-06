@@ -266,7 +266,7 @@ export default function Page() {
     try {
       await addDoc(collection(db, 'inquiries'), {
         name: formData.get('name'),
-        email: formData.get('email'),
+        contact: formData.get('contact'),
         message: formData.get('message'),
         status: 'new',
         createdAt: serverTimestamp(),
@@ -694,7 +694,7 @@ export default function Page() {
           </div>
           <form className="inquiry-form" onSubmit={handleInquirySubmit}>
             <label>Your name<input required name="name" autoComplete="name" placeholder="How should we call you?" disabled={sending || sent} /></label>
-            <label>Email address<input required type="email" name="email" autoComplete="email" placeholder="you@example.com" disabled={sending || sent} /></label>
+            <label>Email or WhatsApp number<input required type="text" name="contact" placeholder="you@example.com or +1 234 567 8900" disabled={sending || sent} /></label>
             <label>Tell us a little about your plans<textarea required name="message" rows={4} placeholder="When are you visiting? How many people? Any special interests?" disabled={sending || sent} /></label>
             
             {error && <p className="error-message" style={{ color: '#ef4444', fontSize: '0.875rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}>{error}</p>}

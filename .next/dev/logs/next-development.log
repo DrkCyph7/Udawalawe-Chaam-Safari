@@ -1,33 +1,4 @@
-{"timestamp":"00:00:00.802","source":"Server","level":"LOG","message":""}
-{"timestamp":"00:02:48.163","source":"Server","level":"LOG","message":"✓ Compiled in 190ms"}
-{"timestamp":"00:05:05.680","source":"Browser","level":"WARN","message":"Image with src \"/safari-landscape.png\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\"eager\"` property if this image is above the fold.\nRead more: https://nextjs.org/docs/app/api-reference/components/image#loading"}
-{"timestamp":"00:05:05.751","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mImage with src \\\"/safari-landscape.png\\\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\\\"eager\\\"` property if this image is above the fold.\\nRead more: https://nextjs.org/docs/app/api-reference/components/image#loading\\u001b[39m\""}
-{"timestamp":"00:05:54.563","source":"Browser","level":"WARN","message":"Image with src \"/safari-landscape.png\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\"eager\"` property if this image is above the fold.\nRead more: https://nextjs.org/docs/app/api-reference/components/image#loading"}
-{"timestamp":"00:05:54.569","source":"Server","level":"WARN","message":"[browser] \"\\u001b[33mImage with src \\\"/safari-landscape.png\\\" was detected as the Largest Contentful Paint (LCP). Please add the `loading=\\\"eager\\\"` property if this image is above the fold.\\nRead more: https://nextjs.org/docs/app/api-reference/components/image#loading\\u001b[39m\""}
-{"timestamp":"00:09:44.930","source":"Server","level":"LOG","message":"✓ Compiled in 175ms"}
-{"timestamp":"09:08:45.523","source":"Server","level":"LOG","message":"✓ Compiled in 331ms"}
-{"timestamp":"09:12:37.904","source":"Server","level":"LOG","message":"✓ Compiled in 186ms"}
-{"timestamp":"09:32:02.643","source":"Server","level":"LOG","message":"✓ Compiled in 163ms"}
-{"timestamp":"09:34:38.736","source":"Server","level":"LOG","message":"✓ Compiled in 293ms"}
-{"timestamp":"09:34:53.068","source":"Server","level":"LOG","message":"✓ Compiled in 63ms"}
-{"timestamp":"09:35:15.814","source":"Server","level":"ERROR","message":"[Server HMR] Update failed, full reload needed: SyntaxError: Identifier 'TRANSITION' has already been declared"}
-{"timestamp":"09:35:15.818","source":"Server","level":"LOG","message":"✓ Compiled in 36ms"}
-{"timestamp":"09:35:30.262","source":"Server","level":"LOG","message":"✓ Compiled in 29ms"}
-{"timestamp":"09:36:00.574","source":"Server","level":"LOG","message":"✓ Compiled in 26ms"}
-{"timestamp":"09:36:23.210","source":"Server","level":"LOG","message":"✓ Compiled in 26ms"}
-{"timestamp":"09:55:04.218","source":"Browser","level":"ERROR","message":"./components/ui/BlurText.tsx:113:17\nError: the name `BlurText` is defined multiple times\n  111 | const TRANSITION = { type: 'spring', stiffness: 56, damping: 20, mass: 1 }\n  112 |\n> 113 | export function BlurText({\n      |                 ^^^^^^^^\n  114 |   text,\n  115 |   animateBy = 'words',\n  116 |   delay = 0.07,\n\nEcmascript file had an error\n\nImport traces:\n  Client Component Browser:\n    ./components/ui/BlurText.tsx [Client Component Browser]\n    ./app/page.tsx [Client Component Browser]\n    ./app/page.tsx [Server Component]\n\n  Client Component SSR:\n    ./components/ui/BlurText.tsx [Client Component SSR]\n    ./app/page.tsx [Client Component SSR]\n    ./app/page.tsx [Server Component] "}
-{"timestamp":"09:55:04.219","source":"Server","level":"ERROR","message":"[browser] \"./components/ui/BlurText.tsx:113:17\\nError: the name `BlurText` is defined multiple times\\n  111 | const TRANSITION = { type: 'spring', stiffness: 56, damping: 20, mass: 1 }\\n  112 |\\n> 113 | export function BlurText({\\n      |                 ^^^^^^^^\\n  114 |   text,\\n  115 |   animateBy = 'words',\\n  116 |   delay = 0.07,\\n\\nEcmascript file had an error\\n\\nImport traces:\\n  Client Component Browser:\\n    ./components/ui/BlurText.tsx [Client Component Browser]\\n    ./app/page.tsx [Client Component Browser]\\n    ./app/page.tsx [Server Component]\\n\\n  Client Component SSR:\\n    ./components/ui/BlurText.tsx [Client Component SSR]\\n    ./app/page.tsx [Client Component SSR]\\n    ./app/page.tsx [Server Component]\" \"\""}
-{"timestamp":"09:55:04.219","source":"Browser","level":"ERROR","message":"./components/ui/BlurText.tsx:111:7\nError: the name `TRANSITION` is defined multiple times\n  109 |\n  110 |\n> 111 | const TRANSITION = { type: 'spring', stiffness: 56, damping: 20, mass: 1 }\n      |       ^^^^^^^^^^\n  112 |\n  113 | export function BlurText({\n  114 |   text,\n\nEcmascript file had an error\n\nImport traces:\n  Client Component Browser:\n    ./components/ui/BlurText.tsx [Client Component Browser]\n    ./app/page.tsx [Client Component Browser]\n    ./app/page.tsx [Server Component]\n\n  Client Component SSR:\n    ./components/ui/BlurText.tsx [Client Component SSR]\n    ./app/page.tsx [Client Component SSR]\n    ./app/page.tsx [Server Component] "}
-{"timestamp":"09:55:04.219","source":"Server","level":"ERROR","message":"[browser] \"./components/ui/BlurText.tsx:111:7\\nError: the name `TRANSITION` is defined multiple times\\n  109 |\\n  110 |\\n> 111 | const TRANSITION = { type: 'spring', stiffness: 56, damping: 20, mass: 1 }\\n      |       ^^^^^^^^^^\\n  112 |\\n  113 | export function BlurText({\\n  114 |   text,\\n\\nEcmascript file had an error\\n\\nImport traces:\\n  Client Component Browser:\\n    ./components/ui/BlurText.tsx [Client Component Browser]\\n    ./app/page.tsx [Client Component Browser]\\n    ./app/page.tsx [Server Component]\\n\\n  Client Component SSR:\\n    ./components/ui/BlurText.tsx [Client Component SSR]\\n    ./app/page.tsx [Client Component SSR]\\n    ./app/page.tsx [Server Component]\" \"\""}
-{"timestamp":"09:57:36.013","source":"Server","level":"LOG","message":"✓ Compiled in 84ms"}
-{"timestamp":"10:42:36.916","source":"Server","level":"LOG","message":"✓ Compiled in 42ms"}
-{"timestamp":"10:42:57.543","source":"Server","level":"LOG","message":"✓ Compiled in 27ms"}
-{"timestamp":"10:43:10.187","source":"Server","level":"LOG","message":"✓ Compiled in 20ms"}
-{"timestamp":"11:37:36.087","source":"Server","level":"LOG","message":"✓ Compiled in 73ms"}
-{"timestamp":"11:37:58.505","source":"Server","level":"LOG","message":"✓ Compiled in 82ms"}
-{"timestamp":"11:54:28.517","source":"Server","level":"LOG","message":"✓ Compiled in 70ms"}
-{"timestamp":"11:54:31.004","source":"Server","level":"LOG","message":"✓ Compiled in 104ms"}
-{"timestamp":"11:57:16.302","source":"Server","level":"LOG","message":"✓ Compiled in 90ms"}
-{"timestamp":"12:00:43.245","source":"Server","level":"LOG","message":"✓ Compiled in 61ms"}
-{"timestamp":"12:39:28.336","source":"Server","level":"LOG","message":"✓ Compiled in 239ms"}
-{"timestamp":"12:39:29.114","source":"Server","level":"LOG","message":"✓ Compiled in 50ms"}
+{"timestamp":"00:00:00.910","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:04:54.081","source":"Server","level":"LOG","message":"✓ Compiled in 114ms"}
+{"timestamp":"00:11:00.849","source":"Server","level":"LOG","message":"✓ Compiled in 191ms"}
+{"timestamp":"00:11:26.805","source":"Server","level":"LOG","message":"✓ Compiled in 464ms"}

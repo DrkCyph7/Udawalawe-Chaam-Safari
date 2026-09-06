@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { SOCIAL_LINKS } from '@/lib/social-links'
+import PopupModal from '@/components/PopupModal'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -178,6 +179,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body className="antialiased">
         {children}
+        <PopupModal />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
