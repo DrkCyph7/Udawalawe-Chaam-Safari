@@ -32,6 +32,8 @@ import { GOOGLE_MAPS_URL, SOCIAL_LINKS, TRIPADVISOR_URL } from '@/lib/social-lin
 import { BlurText } from '@/components/ui/BlurText'
 import { CountUp } from '@/components/ui/CountUp'
 import { GradientText } from '@/components/ui/GradientText'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
+import { db } from '@/lib/firebase'
 
 /* ─── Constants ────────────────────────────────────────────────── */
 const WHATSAPP = '94772783223'
@@ -251,6 +253,33 @@ export default function Page() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [openFaq, setOpenFaq] = useState<number>(0)
   const [sent, setSent] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  async function handleInquirySubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setSending(true)
+    setError(null)
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    
+    try {
+      await addDoc(collection(db, 'inquiries'), {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        message: formData.get('message'),
+        status: 'new',
+        createdAt: serverTimestamp(),
+      })
+      setSent(true)
+      form.reset()
+    } catch (err: any) {
+      setError(err.message || 'An error occurred. Please try again.')
+    } finally {
+      setSending(false)
+    }
+  }
+
   const reduced = useReducedMotion()
 
   /* Parallax hero */
@@ -663,19 +692,28 @@ export default function Page() {
               <span>Udawalawe, Sri Lanka</span>
             </div>
           </div>
-          <form className="inquiry-form" onSubmit={(e) => { e.preventDefault(); setSent(true) }}>
-            <label>Your name<input required name="name" autoComplete="name" placeholder="How should we call you?" /></label>
-            <label>Email address<input required type="email" name="email" autoComplete="email" placeholder="you@example.com" /></label>
-            <label>Tell us a little about your plans<textarea required name="message" rows={4} placeholder="When are you visiting? How many people? Any special interests?" /></label>
+          <form className="inquiry-form" onSubmit={handleInquirySubmit}>
+            <label>Your name<input required name="name" autoComplete="name" placeholder="How should we call you?" disabled={sending || sent} /></label>
+            <label>Email address<input required type="email" name="email" autoComplete="email" placeholder="you@example.com" disabled={sending || sent} /></label>
+            <label>Tell us a little about your plans<textarea required name="message" rows={4} placeholder="When are you visiting? How many people? Any special interests?" disabled={sending || sent} /></label>
+            
+            {error && <p className="error-message" style={{ color: '#ef4444', fontSize: '0.875rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}>{error}</p>}
+            
             <motion.button
               className="button button-dark"
               type="submit"
-              whileHover={{ y: -4, transition: SPRING_SNAPPY }}
-              whileTap={{ scale: 0.97, transition: SPRING_SNAPPY }}
+              disabled={sending || sent}
+              whileHover={sending || sent ? undefined : { y: -4, transition: SPRING_SNAPPY }}
+              whileTap={sending || sent ? undefined : { scale: 0.97, transition: SPRING_SNAPPY }}
+              style={{ opacity: sending ? 0.7 : 1, cursor: sending || sent ? 'default' : 'pointer' }}
             >
-              {sent
-                ? <><Check size={16} /> Thank you — we&apos;ll be in touch</>
-                : <>Send inquiry <ArrowUpRight size={16} /></>}
+              {sending ? (
+                <>Sending...</>
+              ) : sent ? (
+                <><Check size={16} /> Thank you — we&apos;ll be in touch</>
+              ) : (
+                <>Send inquiry <ArrowUpRight size={16} /></>
+              )}
             </motion.button>
           </form>
         </SectionReveal>
