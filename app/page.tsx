@@ -16,22 +16,19 @@ import {
 import {
   ArrowDownRight,
   ArrowUpRight,
-  Camera,
   Check,
   ChevronDown,
   Compass,
-  Globe2,
   MapPin,
   Menu,
   Phone,
-  Play,
-  Star,
   X,
 } from 'lucide-react'
 import { GOOGLE_MAPS_URL, SOCIAL_LINKS, TRIPADVISOR_URL } from '@/lib/social-links'
 import { BlurText } from '@/components/ui/BlurText'
 import { CountUp } from '@/components/ui/CountUp'
 import { GradientText } from '@/components/ui/GradientText'
+import { FacebookIcon, InstagramIcon, YoutubeIcon, TripAdvisorIcon } from '@/components/ui/social-icons'
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from '@/lib/firebase'
 
@@ -789,11 +786,11 @@ export default function Page() {
           <div className="footer-socials" aria-label="Follow Chaam Safari & Tours">
             {(
               [
-                { href: SOCIAL_LINKS.facebook, label: 'Facebook', Icon: Globe2 },
-                { href: SOCIAL_LINKS.instagram, label: 'Instagram', Icon: Camera },
-                { href: SOCIAL_LINKS.youtube, label: 'YouTube', Icon: Play },
-                { href: SOCIAL_LINKS.tripadvisor, label: 'TripAdvisor', Icon: Star },
-              ] as { href: string; label: string; Icon: React.ComponentType<{ size?: number }> }[]
+                { href: SOCIAL_LINKS.facebook, label: 'Facebook', Icon: FacebookIcon },
+                { href: SOCIAL_LINKS.instagram, label: 'Instagram', Icon: InstagramIcon },
+                { href: SOCIAL_LINKS.youtube, label: 'YouTube', Icon: YoutubeIcon },
+                { href: SOCIAL_LINKS.tripadvisor, label: 'TripAdvisor', Icon: TripAdvisorIcon },
+              ] as { href: string; label: string; Icon: React.ComponentType<{ size?: number; className?: string }> }[]
             ).map(({ href, label, Icon }) => (
               <motion.a
                 key={label}
