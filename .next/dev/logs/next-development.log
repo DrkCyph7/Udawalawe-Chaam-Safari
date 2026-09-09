@@ -1,12 +1,15 @@
-{"timestamp":"00:00:00.757","source":"Server","level":"LOG","message":""}
-{"timestamp":"00:07:47.149","source":"Server","level":"LOG","message":"✓ Compiled in 524ms"}
-{"timestamp":"00:09:54.839","source":"Server","level":"LOG","message":"✓ Compiled in 214ms"}
-{"timestamp":"00:11:20.077","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
-{"timestamp":"00:16:26.399","source":"Server","level":"LOG","message":"✓ Compiled in 298ms"}
-{"timestamp":"00:16:44.517","source":"Server","level":"LOG","message":"✓ Compiled in 93ms"}
-{"timestamp":"00:20:10.965","source":"Server","level":"LOG","message":"✓ Compiled in 159ms"}
-{"timestamp":"00:20:38.234","source":"Server","level":"LOG","message":"✓ Compiled in 118ms"}
-{"timestamp":"00:32:28.133","source":"Server","level":"LOG","message":"✓ Compiled in 194ms"}
-{"timestamp":"00:34:23.758","source":"Server","level":"LOG","message":"✓ Compiled in 86ms"}
-{"timestamp":"00:35:10.123","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
-{"timestamp":"01:12:52.935","source":"Server","level":"LOG","message":"✓ Compiled in 280ms"}
+{"timestamp":"00:00:00.679","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:01.257","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: 8uBwlH5MOB4W6fdxLV9O Elephant"}
+{"timestamp":"00:00:01.257","source":"Browser","level":"LOG","message":"[PopupModal] Post skipped — cookie present: skip_8uBwlH5MOB4W6fdxLV9O"}
+{"timestamp":"00:00:01.257","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: 8uBwlH5MOB4W6fdxLV9O Elephant"}
+{"timestamp":"00:00:01.257","source":"Browser","level":"LOG","message":"[PopupModal] Post skipped — cookie present: skip_8uBwlH5MOB4W6fdxLV9O"}
+{"timestamp":"00:02:13.350","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: 8uBwlH5MOB4W6fdxLV9O Elephant"}
+{"timestamp":"00:02:13.350","source":"Browser","level":"LOG","message":"[PopupModal] Post skipped — cookie present: skip_8uBwlH5MOB4W6fdxLV9O"}
+{"timestamp":"00:02:13.350","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: 8uBwlH5MOB4W6fdxLV9O Elephant"}
+{"timestamp":"00:02:13.350","source":"Browser","level":"LOG","message":"[PopupModal] Post skipped — cookie present: skip_8uBwlH5MOB4W6fdxLV9O"}
+{"timestamp":"00:02:32.667","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:02:45.129","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:02:53.742","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:02:55.570","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: 8uBwlH5MOB4W6fdxLV9O Elephant"}
+{"timestamp":"00:02:55.570","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: 8uBwlH5MOB4W6fdxLV9O Elephant"}
+{"timestamp":"00:02:57.363","source":"Browser","level":"LOG","message":"[PopupModal] Showing popup for: Elephant"}

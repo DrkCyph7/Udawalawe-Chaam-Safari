@@ -2,7 +2,8 @@
 
 import Image from 'next/image'
 import { useState, useRef } from 'react'
-import type { Transition, Variants } from 'framer-motion'
+import type { Variants } from 'framer-motion'
+import type { Transition } from 'framer-motion'
 import {
   AnimatePresence,
   MotionConfig,
@@ -47,6 +48,16 @@ const SPRING_SMOOTH: Transition = { type: 'spring', stiffness: 60, damping: 20, 
 const SPRING_SNAPPY: Transition = { type: 'spring', stiffness: 280, damping: 28, mass: 0.8 }
 const SPRING_GENTLE: Transition = { type: 'spring', stiffness: 40, damping: 18, mass: 1.2 }
 const EASE_OUT_EXPO: [number, number, number, number] = [0.16, 1, 0.3, 1]
+
+/* ─── Module-scope Framer Motion variants (stable references) ────── */
+const staggerContainer: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
+}
+const staggerItem: Variants = {
+  hidden: { opacity: 0, y: 28, filter: 'blur(4px)' },
+  visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: SPRING_SMOOTH },
+}
 
 /* ─── Hero Variants (Framer Motion — enhanced) ───────────────────── */
 const heroStagger: Variants = {
@@ -277,8 +288,8 @@ export default function Page() {
 
       setSent(true)
       form.reset()
-    } catch (err: any) {
-      setError(err.message || 'An error occurred. Please try again.')
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'An error occurred. Please try again.')
     } finally {
       setSending(false)
     }
@@ -297,15 +308,7 @@ export default function Page() {
   const timelineRef = useRef<HTMLDivElement>(null)
   const timelineInView = useInView(timelineRef, { once: true, margin: '-40px 0px' })
 
-  /* Stagger container */
-  const staggerContainer: Variants = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
-  }
-  const staggerItem: Variants = {
-    hidden: { opacity: 0, y: 28, filter: 'blur(4px)' },
-    visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: SPRING_SMOOTH },
-  }
+  /* staggerContainer / staggerItem are defined at module scope for stable references */
 
   return (
     <MotionConfig reducedMotion="user">
@@ -321,6 +324,7 @@ export default function Page() {
               alt="Herd of wild Sri Lankan elephants drinking at the Udawalawe reservoir at sunrise — Udawalawe National Park, Sri Lanka"
               fill
               priority
+              quality={85}
               sizes="100vw"
               className="hero-image"
             />
@@ -428,6 +432,7 @@ export default function Page() {
               src="/safari-landscape.png"
               alt="Jeep safari track winding through golden grasslands of Udawalawe National Park with distant mountains, Sri Lanka"
               fill
+              quality={80}
               sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
@@ -485,7 +490,7 @@ export default function Page() {
               <span className="card-index">A</span>
               <Compass size={28} strokeWidth={1} />
               <h3>First light</h3>
-              <p>4 hours [CONFIRM DURATION]. Includes guide, private jeep, park entry ticket, and hotel pickup [CONFIRM INCLUSION].</p>
+              <p>~4 hours. Private jeep, experienced naturalist guide and park entry included. Departs at 05:45&nbsp;AM.</p>
               <motion.a href="#contact" whileHover={{ x: 3, transition: SPRING_SNAPPY }}>
                 Book Udawalawe safari <ArrowUpRight size={15} />
               </motion.a>
@@ -505,7 +510,7 @@ export default function Page() {
               <div className="photo-overlay">
                 <span className="card-index">B</span>
                 <h3>Golden hour</h3>
-                <p>4 hours [CONFIRM DURATION]. Includes guide, private jeep, park entry ticket, and hotel pickup [CONFIRM INCLUSION].</p>
+                <p>~4 hours. Private jeep, experienced naturalist guide and park entry included. Afternoon drive, golden light guaranteed.</p>
                 <motion.a href="#contact" whileHover={{ x: 3, transition: SPRING_SNAPPY }} style={{ display: 'flex', gap: '10px', marginTop: 'auto', borderBottom: '1px solid currentColor', paddingBottom: '7px', textTransform: 'uppercase', letterSpacing: '.1em', fontSize: '10px' }}>
                   Book Udawalawe safari <ArrowUpRight size={15} />
                 </motion.a>
@@ -519,7 +524,7 @@ export default function Page() {
             >
               <span className="card-index">C</span>
               <h3>Full day<br /><em>out there.</em></h3>
-              <p>10 hours [CONFIRM DURATION]. Includes guide, private jeep, park entry ticket, and hotel pickup [CONFIRM INCLUSION].</p>
+              <p>~10 hours. Private jeep, all-day naturalist guide and park entry included. Lunch arrangements available on request.</p>
               <motion.a href="#contact" whileHover={{ x: 3, transition: SPRING_SNAPPY }}>
                 Book Udawalawe safari <ArrowUpRight size={15} />
               </motion.a>
@@ -697,11 +702,11 @@ export default function Page() {
             </div>
           </div>
           <form className="inquiry-form" onSubmit={handleInquirySubmit}>
-            <label>Your name<input required name="name" autoComplete="name" placeholder="How should we call you?" disabled={sending || sent} /></label>
-            <label>Email or WhatsApp number<input required type="text" name="contact" placeholder="you@example.com or +1 234 567 8900" disabled={sending || sent} /></label>
-            <label>Tell us a little about your plans<textarea required name="message" rows={4} placeholder="When are you visiting? How many people? Any special interests?" disabled={sending || sent} /></label>
-            
-            {error && <p className="error-message" style={{ color: '#ef4444', fontSize: '0.875rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}>{error}</p>}
+            <label>Your name<input required name="name" autoComplete="name" placeholder="How should we call you?" disabled={sending || sent} onChange={() => error && setError(null)} /></label>
+            <label>Email or WhatsApp number<input required type="text" name="contact" placeholder="you@example.com or +1 234 567 8900" disabled={sending || sent} onChange={() => error && setError(null)} /></label>
+            <label>Tell us a little about your plans<textarea required name="message" rows={4} placeholder="When are you visiting? How many people? Any special interests?" disabled={sending || sent} onChange={() => error && setError(null)} /></label>
+
+            {error && <p role="alert" className="error-message" style={{ color: '#ef4444', fontSize: '0.875rem', marginTop: '0.5rem', marginBottom: '0.5rem' }}>{error}</p>}
             
             <motion.button
               className="button button-dark"
