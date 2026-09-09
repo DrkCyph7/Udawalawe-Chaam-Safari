@@ -798,7 +798,7 @@ export default function Page() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                whileHover={{ y: -3, color: '#d1a05d', transition: SPRING_SNAPPY }}
+                whileHover={{ y: -3, scale: 1.1, transition: SPRING_SNAPPY }}
               >
                 <Icon size={18} />
               </motion.a>
