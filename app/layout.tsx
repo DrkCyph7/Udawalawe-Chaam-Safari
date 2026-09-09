@@ -10,6 +10,10 @@ export const metadata: Metadata = {
     'Book a private Udawalawe safari jeep tour in Sri Lanka with Chaam Safari. Experience an unforgettable elephant safari and wildlife private tours.',
   metadataBase: new URL('https://www.udawalawesafarijeep.lk'),
   alternates: { canonical: '/' },
+  icons: {
+    icon: '/icon.png',
+    apple: '/icon.png',
+  },
   keywords: [
     'Udawalawe safari',
     'Udawalawe National Park',
