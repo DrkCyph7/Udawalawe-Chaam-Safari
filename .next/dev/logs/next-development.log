@@ -1,15 +1,18 @@
-{"timestamp":"00:00:00.679","source":"Server","level":"LOG","message":""}
-{"timestamp":"00:00:01.257","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: 8uBwlH5MOB4W6fdxLV9O Elephant"}
-{"timestamp":"00:00:01.257","source":"Browser","level":"LOG","message":"[PopupModal] Post skipped — cookie present: skip_8uBwlH5MOB4W6fdxLV9O"}
-{"timestamp":"00:00:01.257","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: 8uBwlH5MOB4W6fdxLV9O Elephant"}
-{"timestamp":"00:00:01.257","source":"Browser","level":"LOG","message":"[PopupModal] Post skipped — cookie present: skip_8uBwlH5MOB4W6fdxLV9O"}
-{"timestamp":"00:02:13.350","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: 8uBwlH5MOB4W6fdxLV9O Elephant"}
-{"timestamp":"00:02:13.350","source":"Browser","level":"LOG","message":"[PopupModal] Post skipped — cookie present: skip_8uBwlH5MOB4W6fdxLV9O"}
-{"timestamp":"00:02:13.350","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: 8uBwlH5MOB4W6fdxLV9O Elephant"}
-{"timestamp":"00:02:13.350","source":"Browser","level":"LOG","message":"[PopupModal] Post skipped — cookie present: skip_8uBwlH5MOB4W6fdxLV9O"}
-{"timestamp":"00:02:32.667","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
-{"timestamp":"00:02:45.129","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
-{"timestamp":"00:02:53.742","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
-{"timestamp":"00:02:55.570","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: 8uBwlH5MOB4W6fdxLV9O Elephant"}
-{"timestamp":"00:02:55.570","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: 8uBwlH5MOB4W6fdxLV9O Elephant"}
-{"timestamp":"00:02:57.363","source":"Browser","level":"LOG","message":"[PopupModal] Showing popup for: Elephant"}
+{"timestamp":"00:00:01.035","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:09.720","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: WLtgUf2bE9cuC0pu8LaB “Special Safari Discount – This Week Only!”"}
+{"timestamp":"00:00:09.720","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: WLtgUf2bE9cuC0pu8LaB “Special Safari Discount – This Week Only!”"}
+{"timestamp":"00:00:14.738","source":"Browser","level":"LOG","message":"[PopupModal] Showing small ad for: “Special Safari Discount – This Week Only!”"}
+{"timestamp":"00:00:17.627","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: WLtgUf2bE9cuC0pu8LaB “Special Safari Discount – This Week Only!”"}
+{"timestamp":"00:00:17.627","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: WLtgUf2bE9cuC0pu8LaB “Special Safari Discount – This Week Only!”"}
+{"timestamp":"00:00:22.631","source":"Browser","level":"LOG","message":"[PopupModal] Showing small ad for: “Special Safari Discount – This Week Only!”"}
+{"timestamp":"00:00:56.673","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:00:58.914","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: WLtgUf2bE9cuC0pu8LaB “Special Safari Discount – This Week Only!”"}
+{"timestamp":"00:00:58.915","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: WLtgUf2bE9cuC0pu8LaB “Special Safari Discount – This Week Only!”"}
+{"timestamp":"00:01:00.961","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:01:03.443","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: WLtgUf2bE9cuC0pu8LaB “Special Safari Discount – This Week Only!”"}
+{"timestamp":"00:01:03.443","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: WLtgUf2bE9cuC0pu8LaB “Special Safari Discount – This Week Only!”"}
+{"timestamp":"00:01:08.419","source":"Browser","level":"LOG","message":"[PopupModal] Showing small ad for: “Special Safari Discount – This Week Only!”"}
+{"timestamp":"00:01:33.405","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:01:35.393","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: WLtgUf2bE9cuC0pu8LaB “Special Safari Discount – This Week Only!”"}
+{"timestamp":"00:01:35.393","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: WLtgUf2bE9cuC0pu8LaB “Special Safari Discount – This Week Only!”"}
+{"timestamp":"00:01:40.355","source":"Browser","level":"LOG","message":"[PopupModal] Showing small ad for: “Special Safari Discount – This Week Only!”"}

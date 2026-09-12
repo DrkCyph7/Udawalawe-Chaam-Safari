@@ -63,7 +63,7 @@ function PopupImage({ src, alt }: { src: string; alt: string }) {
 
 /* ─── Component ───────────────────────────────────────────────────── */
 export default function PopupModal() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [adState, setAdState] = useState<"hidden" | "small" | "big">("hidden");
   const [post, setPost] = useState<Post | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -103,22 +103,24 @@ export default function PopupModal() {
         const latestPost = validPosts[0];
         console.log("[PopupModal] Valid post found:", latestPost.id, latestPost.title);
 
-        // Check if user already permanently dismissed this post
-        const cookieKey = `skip_${latestPost.id}`;
-        if (getCookie(cookieKey)) {
-          console.log("[PopupModal] Post skipped — cookie present:", cookieKey);
+        // Check if user already dismissed this post twice
+        const cookieKey = `closes_${latestPost.id}`;
+        const closeCount = parseInt(getCookie(cookieKey) || "0", 10);
+        
+        if (closeCount >= 2) {
+          console.log("[PopupModal] Post skipped — close count is 2 or more.");
           return;
         }
 
         if (isMounted) {
           setPost(latestPost);
-          // Show after 1.5 s so the page finishes loading first
+          // Show small ad after 5 s
           timerRef.current = setTimeout(() => {
             if (isMounted) {
-              console.log("[PopupModal] Showing popup for:", latestPost.title);
-              setIsOpen(true);
+              console.log("[PopupModal] Showing small ad for:", latestPost.title);
+              setAdState("small");
             }
-          }, 1500);
+          }, 5000);
         }
       } catch (error) {
         console.error("[PopupModal] Firestore error:", error);
@@ -133,40 +135,66 @@ export default function PopupModal() {
     };
   }, []);
 
-  /* Permanently dismiss — cookie lives until the post's own expiry date */
-  const handleSkip = () => {
+  const handleClose = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     if (!post) return;
-    setCookie(`skip_${post.id}`, "1", toDate(post.expiryDate));
-    setIsOpen(false);
+    
+    const cookieKey = `closes_${post.id}`;
+    const currentCloses = parseInt(getCookie(cookieKey) || "0", 10);
+    const newCloses = currentCloses + 1;
+    
+    // Save to cookie
+    setCookie(cookieKey, newCloses.toString(), toDate(post.expiryDate));
+    
+    setAdState("hidden");
     if (timerRef.current) clearTimeout(timerRef.current);
+    
+    // If closed less than 2 times, show again in 1 minute
+    if (newCloses < 2) {
+      timerRef.current = setTimeout(() => {
+        setAdState("small");
+      }, 60000);
+    }
   };
 
-  /* Temporarily dismiss — re-open after 60 s if still valid */
-  const handleLater = () => {
-    setIsOpen(false);
-    if (timerRef.current) clearTimeout(timerRef.current);
-
-    timerRef.current = setTimeout(async () => {
-      if (!post) return;
-      if (getCookie(`skip_${post.id}`)) return;
-      if (toDate(post.expiryDate) < new Date()) return;
-
-      try {
-        const docRef = doc(db, "posts", post.id);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists() && docSnap.data().isActive) {
-          setIsOpen(true);
-        }
-      } catch (err) {
-        console.error("[PopupModal] Re-check error:", err);
-      }
-    }, 60000);
+  const handleSmallClick = () => {
+    setAdState("big");
   };
 
   return (
     <AnimatePresence>
-      {isOpen && post && (
-        /* Backdrop — click outside the card to permanently dismiss */
+      {adState === "small" && post && (
+        <motion.div
+          key="small-ad"
+          initial={{ opacity: 0, y: 50, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 50, scale: 0.95 }}
+          transition={{ type: "spring", damping: 25, stiffness: 300 }}
+          className="fixed bottom-4 right-4 z-[90] flex w-72 sm:w-80 cursor-pointer items-center overflow-hidden rounded-xl bg-gradient-to-br from-[#1a3024] to-[#122219] shadow-2xl ring-1 ring-white/20 hover:ring-white/40 transition-shadow"
+          onClick={handleSmallClick}
+        >
+          {post.imageUrl && (
+            <div className="relative h-20 w-24 shrink-0 bg-black/30">
+              <PopupImage src={post.imageUrl} alt={post.title} />
+            </div>
+          )}
+          <div className="flex-1 p-3 pr-10">
+            <h3 className="line-clamp-2 text-sm font-bold text-white leading-snug">
+              {post.title}
+            </h3>
+            <p className="mt-1 text-xs font-medium text-amber-400">Click to see more</p>
+          </div>
+          <button
+            onClick={handleClose}
+            aria-label="Close ad"
+            className="absolute right-2 top-2 rounded-full bg-black/20 p-1.5 text-white/70 hover:bg-black/40 hover:text-white transition-all focus:outline-none"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </motion.div>
+      )}
+
+      {adState === "big" && post && (
         <motion.div
           key="popup-backdrop"
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 p-4 backdrop-blur-md"
@@ -174,7 +202,7 @@ export default function PopupModal() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          onClick={handleSkip}
+          onClick={handleClose}
           role="dialog"
           aria-modal="true"
           aria-label="Promotional offer"
@@ -188,9 +216,9 @@ export default function PopupModal() {
             className="relative w-full max-w-lg overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#1a3024] to-[#122219] text-white shadow-2xl ring-1 ring-white/20"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close / Skip button */}
+            {/* Close button */}
             <button
-              onClick={handleSkip}
+              onClick={handleClose}
               aria-label="Close offer"
               className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md transition-colors hover:bg-black/60 focus:outline-none focus:ring-2 focus:ring-white"
             >
@@ -229,7 +257,7 @@ export default function PopupModal() {
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => setAdState("hidden")}
                   className="mx-auto flex w-full max-w-xs items-center justify-center gap-2 rounded-xl bg-[#25D366] px-5 py-3 text-sm font-semibold text-white shadow-lg transition-all hover:bg-[#1db954] hover:scale-[1.03] active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2 focus:ring-offset-[#1a3024]"
                 >
                   <svg className="h-5 w-5 shrink-0" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -237,14 +265,6 @@ export default function PopupModal() {
                   </svg>
                   Chat on WhatsApp
                 </a>
-
-                {/* Remind later */}
-                <button
-                  onClick={handleLater}
-                  className="text-xs font-medium text-[#7ba995] transition-colors hover:text-white focus:outline-none"
-                >
-                  Remind me later
-                </button>
               </div>
             </div>
           </motion.div>
@@ -253,3 +273,4 @@ export default function PopupModal() {
     </AnimatePresence>
   );
 }
+
