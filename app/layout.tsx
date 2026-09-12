@@ -36,26 +36,12 @@ export const metadata: Metadata = {
     siteName: 'Chaam Safari & Tours',
     type: 'website',
     locale: 'en_US',
-    images: [
-      {
-        url: 'https://www.udawalawesafarijeep.lk/safari-hero-og.png',
-        width: 1200,
-        height: 630,
-        alt: 'Wild elephants at the Udawalawe reservoir — Chaam Safari & Tours',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Chaam Safari & Tours — Udawalawe National Park',
     description:
       'Private jeep safaris with local naturalist guides. Wild elephants, crocodiles, 200+ bird species. Book a morning, afternoon or full-day drive in Udawalawe, Sri Lanka.',
-    images: [
-      {
-        url: 'https://www.udawalawesafarijeep.lk/safari-hero-og.png',
-        alt: 'Wild elephants at the Udawalawe reservoir — Chaam Safari & Tours',
-      },
-    ],
   },
   robots: {
     index: true,
@@ -87,7 +73,7 @@ const localBusinessSchema = {
     'Private jeep safari experiences at Udawalawe National Park, Sri Lanka. Expert local naturalist guides, morning and afternoon drives, wild elephant sightings.',
   url: 'https://www.udawalawesafarijeep.lk',
   telephone: '+94772783223',
-  image: 'https://www.udawalawesafarijeep.lk/safari-hero-og.png',
+  image: 'https://www.udawalawesafarijeep.lk/opengraph-image',
   priceRange: '$$',
   address: {
     '@type': 'PostalAddress',
