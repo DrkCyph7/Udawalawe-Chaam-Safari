@@ -16,3 +16,10 @@
 {"timestamp":"00:01:35.393","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: WLtgUf2bE9cuC0pu8LaB “Special Safari Discount – This Week Only!”"}
 {"timestamp":"00:01:35.393","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: WLtgUf2bE9cuC0pu8LaB “Special Safari Discount – This Week Only!”"}
 {"timestamp":"00:01:40.355","source":"Browser","level":"LOG","message":"[PopupModal] Showing small ad for: “Special Safari Discount – This Week Only!”"}
+{"timestamp":"00:05:26.036","source":"Server","level":"LOG","message":"✓ Compiled in 355ms"}
+{"timestamp":"00:05:34.998","source":"Server","level":"LOG","message":"✓ Compiled in 45ms"}
+{"timestamp":"00:07:19.913","source":"Server","level":"LOG","message":"✓ Compiled in 178ms"}
+{"timestamp":"00:07:42.383","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: WLtgUf2bE9cuC0pu8LaB “Special Safari Discount – This Week Only!”"}
+{"timestamp":"00:07:42.383","source":"Browser","level":"LOG","message":"[PopupModal] Post skipped — close count is 2 or more."}
+{"timestamp":"00:07:42.383","source":"Browser","level":"LOG","message":"[PopupModal] Valid post found: WLtgUf2bE9cuC0pu8LaB “Special Safari Discount – This Week Only!”"}
+{"timestamp":"00:07:42.383","source":"Browser","level":"LOG","message":"[PopupModal] Post skipped — close count is 2 or more."}

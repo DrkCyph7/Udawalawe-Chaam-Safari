@@ -343,7 +343,7 @@ export default function Page() {
             </motion.p>
 
             {/* H1 — character-by-character cinematic reveal */}
-            <HeroH1 lines={["Udawalawe Wild Safari", "Tours with Chaam Safari."]} />
+            <HeroH1 lines={["Udawalawe", "Wild Safari Tours", "with Chaam Safari."]} />
 
             {/* Hero subtext — slide up with blur */}
             <motion.p
